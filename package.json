@@ -34,7 +34,10 @@
     "react-native-drop-shadow": "^0.0.6",
     "react-native-dropdown-select-list": "^2.0.4",
     "react-native-gesture-handler": "^2.9.0",
+    "react-native-image-blur-shadow": "^1.0.4",
+    "react-native-image-picker": "^5.4.0",
     "react-native-input-spinner": "^1.7.13",
+    "react-native-linear-gradient": "^2.6.2",
     "react-native-navigation-container": "^1.0.6",
     "react-native-numeric-input": "^1.9.1",
     "react-native-pager-view": "^6.1.4",
@@ -43,6 +46,7 @@
     "react-native-screens": "^3.20.0",
     "react-native-swipe-list-view": "^3.2.9",
     "react-native-tab-view": "^3.4.0",
+    "react-native-table-component": "^1.2.2",
     "react-native-vector-icons": "^9.2.0",
     "react-redux": "^8.0.5",
     "redux-persist": "^6.0.0"
