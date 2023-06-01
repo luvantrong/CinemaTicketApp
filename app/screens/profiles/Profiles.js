@@ -5,12 +5,26 @@ import {
   Image,
   TouchableOpacity,
   Switch,
+  Pressable,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { AccountContext } from "../../context/AccountContext";
 
-const Profiles = () => {
+const Profiles = (props) => {
+  const { navigation } = props;
   const [isEnabledNotification, setIsEnabledNotifications] = useState(true);
   const [isEnabledDarkMode, setIsEnabledDarkMode] = useState(true);
+  const { dataAccount } = useContext(AccountContext);
+
+  console.log(dataAccount._id);
+
+  const handleChangePassword = () => {
+    navigation.navigate("ChangePass");
+  };
+
+  const handleEditProfile = () => {
+    navigation.navigate("EditProfile");
+  };
 
   return (
     <View style={styles.container}>
@@ -31,19 +45,22 @@ const Profiles = () => {
           <Text style={styles.textCenterTitle}>QT with you</Text>
           <Text style={styles.textCenterAddress}>nqtruong.gl@gmail.com</Text>
         </View>
-        <TouchableOpacity style={styles.btnEdit}>
+        <TouchableOpacity style={styles.btnEdit} onPress={handleEditProfile}>
           <Text style={styles.textEdit}>Edit Profile</Text>
         </TouchableOpacity>
       </View>
 
       <TouchableOpacity style={styles.content}>
-        <View style={styles.contentFunction}>
+        <Pressable
+          style={styles.contentFunction}
+          onPress={handleChangePassword}
+        >
           <Image
             style={styles.contentFunctionImage}
             source={require("../../images/key.png")}
           ></Image>
           <Text style={styles.textFunction}>Change Password</Text>
-        </View>
+        </Pressable>
         <Image
           style={styles.imgBack}
           source={require("../../images/backarrow1.png")}
