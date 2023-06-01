@@ -1,20 +1,12 @@
 import React from "react";
-import AppNavigation from "../CinemaTicketApp/src/navigations/AppNavigation";
-import { UserConTextProvider } from "./src/useContexts/UserContext";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import { configureStore } from "./redux/store.js";
+import AppNavigation from "./app/navigation/AppNavigation";
+import { AccountConTextProvider } from "./app/context/AccountContext";
 
 const App = () => {
-  const { store, persistor } = configureStore();
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        {/* <UserConTextProvider> */}
-        <AppNavigation />
-        {/* </UserConTextProvider> */}
-      </PersistGate>
-    </Provider>
+    <AccountConTextProvider>
+      <AppNavigation />
+    </AccountConTextProvider>
   );
 };
 
