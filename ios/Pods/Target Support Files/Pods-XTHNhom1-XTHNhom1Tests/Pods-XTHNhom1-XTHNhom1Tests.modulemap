@@ -1,0 +1,6 @@
+module Pods_XTHNhom1_XTHNhom1Tests {
+  umbrella header "Pods-XTHNhom1-XTHNhom1Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}
