@@ -244,4 +244,10 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 1, height: 13 },
     paddingLeft: 30,
   },
+
+  textError: {
+    color: "red",
+    marginBottom: 5,
+    marginStart: 18,
+  },
 });
