@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   Pressable,
+  ToastAndroid,
 } from "react-native";
 import React, { useState, useCallback, useContext, useEffect } from "react";
 import { AccountContext } from "../../context/AccountContext";
@@ -34,9 +35,6 @@ const EditProfile = (props) => {
   };
 
   const id = dataAccount._id;
-  const email = dataAccount.email;
-  const password = dataAccount.password;
-  const role = dataAccount.role;
 
   const handleChoosePhoto = useCallback(() => {
     const options = {
@@ -46,7 +44,7 @@ const EditProfile = (props) => {
       includeExtra: true,
     };
     //const result =  launchCamera(options, ...);
-    const result = launchCamera(options, async (response) => {
+    const result = launchImageLibrary(options, async (response) => {
       if (response.didCancel) {
         console.log("Cancel pick image");
       } else if (response.error) {
@@ -82,6 +80,28 @@ const EditProfile = (props) => {
       }
     });
   }, []);
+
+  const handleUpdate = async () => {
+    let data = { id, name, address, phone, avatar };
+    const fetchData = async (data) => {
+      let url = `${config.CONSTANTS.IP}api/account/update-account`;
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const res = await response.json();
+      return res;
+    };
+    const res = await fetchData(data);
+    console.log(res);
+    if (res.result) {
+      ToastAndroid.show("Cập nhật thành công", ToastAndroid.SHORT);
+      setDataAccount(res.account);
+    } else {
+      ToastAndroid.show("Cập nhật thất bại", ToastAndroid.SHORT);
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -112,6 +132,8 @@ const EditProfile = (props) => {
             placeholder="Name"
             placeholderTextColor={"white"}
             style={styles.editInputCenter}
+            value={name}
+            onChangeText={setName}
           ></TextInput>
           <Image
             style={styles.icon}
@@ -120,21 +142,12 @@ const EditProfile = (props) => {
         </View>
         <View>
           <TextInput
-            placeholder="Email"
-            placeholderTextColor={"white"}
-            style={styles.editInputCenter}
-          ></TextInput>
-          <Image
-            style={styles.icon}
-            source={require("../../images/email.png")}
-          ></Image>
-        </View>
-        <View>
-          <TextInput
             keyboardType="phone-pad"
             placeholder="Phone"
             placeholderTextColor={"white"}
             style={styles.editInputCenter}
+            value={phone}
+            onChangeText={setPhone}
           ></TextInput>
           <Image
             style={styles.icon}
@@ -143,10 +156,11 @@ const EditProfile = (props) => {
         </View>
         <View>
           <TextInput
-            secureTextEntry={showPass}
             placeholder="Address"
             placeholderTextColor={"white"}
             style={styles.editInputCenter}
+            value={address}
+            onChangeText={setAddress}
           ></TextInput>
           <Image
             style={styles.icon}
@@ -161,7 +175,7 @@ const EditProfile = (props) => {
                     </TouchableOpacity> */}
         </View>
 
-        <TouchableOpacity style={styles.btnEdit}>
+        <TouchableOpacity style={styles.btnEdit} onPress={handleUpdate}>
           <Text style={styles.textEdit}>Edit Profile</Text>
         </TouchableOpacity>
       </View>

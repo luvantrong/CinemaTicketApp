@@ -38,12 +38,12 @@ const Profiles = (props) => {
         <View style={styles.contentCenter}>
           <Image
             style={styles.imgProfile}
-            source={require("../../images/imgProfile.jpg")}
+            source={{ uri: dataAccount.avatar }}
           ></Image>
         </View>
         <View style={styles.introduceCenter}>
           <Text style={styles.textCenterTitle}>QT with you</Text>
-          <Text style={styles.textCenterAddress}>nqtruong.gl@gmail.com</Text>
+          <Text style={styles.textCenterAddress}>{dataAccount.email}</Text>
         </View>
         <TouchableOpacity style={styles.btnEdit} onPress={handleEditProfile}>
           <Text style={styles.textEdit}>Edit Profile</Text>
