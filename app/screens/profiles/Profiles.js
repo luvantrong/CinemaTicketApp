@@ -7,7 +7,7 @@ import {
   Switch,
   Pressable,
 } from "react-native";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { AccountContext } from "../../context/AccountContext";
 
 const Profiles = (props) => {
@@ -15,6 +15,10 @@ const Profiles = (props) => {
   const [isEnabledNotification, setIsEnabledNotifications] = useState(true);
   const [isEnabledDarkMode, setIsEnabledDarkMode] = useState(true);
   const { dataAccount } = useContext(AccountContext);
+  const [avatar, setAvatar] = useState(null);
+  useEffect(() => {
+    dataAccount.avatar === "" ? setAvatar(null) : setAvatar(dataAccount.avatar);
+  }, [dataAccount]);
 
   console.log(dataAccount._id);
 
@@ -36,10 +40,7 @@ const Profiles = (props) => {
       </View>
       <View style={styles.center}>
         <View style={styles.contentCenter}>
-          <Image
-            style={styles.imgProfile}
-            source={{ uri: dataAccount.avatar }}
-          ></Image>
+          <Image style={styles.imgProfile} source={{ uri: avatar }}></Image>
         </View>
         <View style={styles.introduceCenter}>
           <Text style={styles.textCenterTitle}>QT with you</Text>

@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Pressable,
   ToastAndroid,
+  Alert,
 } from "react-native";
 import React, { useState, useCallback, useContext, useEffect } from "react";
 import { AccountContext } from "../../context/AccountContext";
@@ -102,6 +103,19 @@ const EditProfile = (props) => {
       ToastAndroid.show("Cập nhật thất bại", ToastAndroid.SHORT);
     }
   };
+
+  const update = () => {
+    Alert.alert("Thông báo", "Bạn có muốn thay đổi thông tin cá nhân không?", [
+      {
+        text: "Huỷ",
+        style: "cancel",
+      },
+      {
+        text: "Đồng ý",
+        onPress: handleUpdate,
+      },
+    ]);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -175,7 +189,7 @@ const EditProfile = (props) => {
                     </TouchableOpacity> */}
         </View>
 
-        <TouchableOpacity style={styles.btnEdit} onPress={handleUpdate}>
+        <TouchableOpacity style={styles.btnEdit} onPress={update}>
           <Text style={styles.textEdit}>Edit Profile</Text>
         </TouchableOpacity>
       </View>
