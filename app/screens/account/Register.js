@@ -19,6 +19,77 @@ const Register = (props) => {
   const [rePassword, setRePassword] = useState("");
   const [name, setName] = useState("");
 
+<<<<<<< Updated upstream
+=======
+  const [showErrowEmail, setShowErrowEmail] = useState("none");
+  const [showErrowPW, setShowErrowPW] = useState("none");
+  const [showErrorName, setShowErrorName] = useState("none");
+  const [showErrorRePW, setShowErrorRePW] = useState("none");
+  const [contentErrorEmail, setContentErrorEmail] = useState("");
+  const [contentErrorPW, setContentErrorPW] = useState("");
+  const [contentErrorName, setContentErrorName] = useState("");
+  const [contentErrorRePW, setContentErrorRePW] = useState("");
+
+  const validateEmail = (email) => {
+    var re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  };
+
+  const onChangeTextEmail = (text) => {
+    if (!text) {
+      setShowErrowEmail("flex");
+      setContentErrorEmail("Không để trống email");
+    } else if (!validateEmail(email)) {
+      setShowErrowEmail("flex");
+      setContentErrorEmail("Nhập chưa đúng định dạng email");
+    } else {
+      setShowErrowEmail("none");
+      setContentErrorEmail("");
+    }
+    setEmail(text);
+  };
+
+  const onChangeTextPassword = (text) => {
+    if (!text) {
+      setShowErrowPW("flex");
+      setContentErrorPW("Không để trống mật khẩu");
+    } else {
+      setShowErrowPW("none");
+      setContentErrorPW("");
+    }
+    setPassword(text);
+  };
+
+  const onChangeTextRePassword = (text) => {
+    if (!text) {
+      setShowErrorRePW("flex");
+      setContentErrorRePW("Không để trống mật khẩu");
+    } else {
+      console.log("aa", text);
+      if (text != password.toString()) {
+        setShowErrorRePW("flex");
+        setContentErrorRePW("Mật khẩu không khớp");
+      } else {
+        setShowErrorRePW("none");
+        setContentErrorRePW("");
+      }
+    }
+    setRePassword(text);
+  };
+
+  const onChangeTextName = (text) => {
+    if (!text) {
+      setShowErrorName("flex");
+      setContentErrorName("Không để trống tên");
+    } else {
+      setShowErrorName("none");
+      setContentErrorName("");
+    }
+    setName(text);
+  };
+
+>>>>>>> Stashed changes
   const handleRegister = async () => {
     let data = { email, password, name };
     const fetchData = async (data) => {
