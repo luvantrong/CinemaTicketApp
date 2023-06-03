@@ -20,6 +20,41 @@ const Login = (props) => {
     useContext(AccountContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showErrowEmail, setShowErrowEmail] = useState("none");
+  const [showErrowPW, setShowErrowPW] = useState("none");
+  const [contentErrorEmail, setContentErrorEmail] = useState("");
+  const [contentErrorPW, setContentErrorPW] = useState("");
+
+  const validateEmail = (email) => {
+    var re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  };
+
+  const onChangeTextEmail = (text) => {
+    if (!text) {
+      setShowErrowEmail("flex");
+      setContentErrorEmail("Không để trống email");
+    } else if (!validateEmail(email)) {
+      setShowErrowEmail("flex");
+      setContentErrorEmail("Nhập chưa đúng định dạng email");
+    } else {
+      setShowErrowEmail("none");
+      setContentErrorEmail("");
+    }
+    setEmail(text);
+  };
+
+  const onChangeTextPassword = (text) => {
+    if (!text) {
+      setShowErrowPW("flex");
+      setContentErrorPW("Không để trống mật khẩu");
+    } else {
+      setShowErrowPW("none");
+      setContentErrorPW("");
+    }
+    setPassword(text);
+  };
 
   useEffect(() => {
     setEmail(rememberEmailRegister);
@@ -79,16 +114,22 @@ const Login = (props) => {
       <View style={styles.ViewTextInput}>
         <TextInput
           value={email}
-          onChangeText={setEmail}
+          onChangeText={onChangeTextEmail}
           style={styles.TextInput}
           placeholder="Username"
         ></TextInput>
+        <Text style={[styles.textError, { display: showErrowEmail }]}>
+          {contentErrorEmail}
+        </Text>
         <TextInput
           value={password}
-          onChangeText={setPassword}
+          onChangeText={onChangeTextPassword}
           style={styles.TextInput}
           placeholder="Password"
         ></TextInput>
+        <Text style={[styles.textError, { display: showErrowPW }]}>
+          {contentErrorPW}
+        </Text>
         <Text style={{ textAlign: "right", color: "black" }}>
           Forgot Password?
         </Text>
@@ -202,5 +243,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowOffset: { width: 1, height: 13 },
     paddingLeft: 30,
+  },
+
+  textError: {
+    color: "red",
+    marginBottom: 5,
+    marginStart: 18,
   },
 });
