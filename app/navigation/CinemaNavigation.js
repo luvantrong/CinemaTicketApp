@@ -7,19 +7,21 @@ import ListMoviesScreen from "../screens/movies/ListMoviesScreen";
 import Profiles from "../screens/profiles/Profiles";
 import EditProfile from "../screens/profiles/EditProfile";
 import ChangePass from "../screens/profiles/ChangePass";
+import HomeScreen from "../screens/movies/HomeScreen"
 
 const Stack = createNativeStackNavigator();
 
 const HomeStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName="HomePage"
+      initialRouteName="HomeScreen"
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Stack.Screen name="HomePage" component={DetailMovieScreen} />
-      <Stack.Screen name="ListMoviesScreent" component={ListMoviesScreen} />
+      <Stack.Screen name="DetailMovieScreen" component={DetailMovieScreen} />
+      <Stack.Screen name="ListMoviesScreen" component={ListMoviesScreen} />
+      <Stack.Screen name="HomeScreen" component={HomeScreen} />
     </Stack.Navigator>
   );
 };

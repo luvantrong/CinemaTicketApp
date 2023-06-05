@@ -6,11 +6,9 @@ import ItemService from "./app/screens/movies/Item/ItemService";
 
 const App = () => {
   return (
-    // <AccountConTextProvider>
-    //   <AppNavigation />
-    // </AccountConTextProvider>
-    <HomeScreen/>
-    // <ItemService/>
+    <AccountConTextProvider>
+      <AppNavigation />
+    </AccountConTextProvider>
   );
 };
 
