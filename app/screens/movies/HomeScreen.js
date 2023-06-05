@@ -14,6 +14,7 @@ import React, { useState, useEffect } from "react";
 import RadioGroup from "react-native-radio-buttons-group";
 import MoviesMain from "./MoviesMain";
 import ItemMoreMovies from "./Item/ItemMoreMovies";
+import ItemEventHomeScreen from "../Event/Item/ItemEventHomeScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import config from "../../config/config";
 
@@ -186,10 +187,7 @@ const HomeScreen = (props) => {
             showsHorizontalScrollIndicator={false}
             horizontal={true}
             renderItem={({ item }) => (
-              <Image
-                style={styles.itemProgram}
-                source={{ uri: item.anhBiaSuKien }}
-              />
+              <ItemEventHomeScreen data={item} navigation={navigation} />
             )}
             keyExtractor={(item) => item._id}
           />

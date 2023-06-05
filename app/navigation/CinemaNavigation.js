@@ -7,7 +7,8 @@ import ListMoviesScreen from "../screens/movies/ListMoviesScreen";
 import Profiles from "../screens/profiles/Profiles";
 import EditProfile from "../screens/profiles/EditProfile";
 import ChangePass from "../screens/profiles/ChangePass";
-import HomeScreen from "../screens/movies/HomeScreen"
+import HomeScreen from "../screens/movies/HomeScreen";
+import EventScreen from "../screens/Event/EventScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ const HomeStack = () => {
       <Stack.Screen name="DetailMovieScreen" component={DetailMovieScreen} />
       <Stack.Screen name="ListMoviesScreen" component={ListMoviesScreen} />
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      <Stack.Screen name="EventScreen" component={EventScreen} />
     </Stack.Navigator>
   );
 };
