@@ -12,16 +12,16 @@ const ItemMoreMovies = (props) => {
   const { data, navigation } = props;
 
   const handleToDetailMovie = () => {
-    navigation.navigate("DetailMovieScreen");
+    navigation.navigate("DetailMovieScreen", { data: data });
   };
 
   return (
     <Pressable style={styles.container} onPress={handleToDetailMovie}>
-      <Image style={styles.posterImage} source={data.image} />
-      <Text style={styles.TextName}>{data.name}</Text>
-      <Text style={styles.textType}>{data.type}</Text>
+      <Image style={styles.posterImage} source={{ uri: data.anhBia }} />
+      <Text style={styles.TextName}>{data.tenPhim}</Text>
+      <Text style={styles.textType}>{data.dangPhim}</Text>
       <View style={styles.pointContainer}>
-        <Text style={styles.textPoint}>{data.point}</Text>
+        <Text style={styles.textPoint}>4.5</Text>
       </View>
     </Pressable>
   );

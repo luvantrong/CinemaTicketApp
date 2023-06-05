@@ -239,7 +239,7 @@ const HomeScreen = (props) => {
             </TouchableOpacity>
           </View>
           <FlatList
-            data={moreMovies}
+            data={dataMovie}
             horizontal={true}
             renderItem={({ item }) => (
               <ItemMoreMovies data={item} navigation={navigation} />
