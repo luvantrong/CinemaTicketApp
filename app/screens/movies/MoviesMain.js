@@ -15,16 +15,20 @@ import Animated, {
   useAnimatedScrollHandler,
   interpolate,
 } from "react-native-reanimated";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import config from "../../config/config";
 
 const MoviesMain = (props) => {
   const { data, navigation } = props;
+  console.log(data);
   const { width } = useWindowDimensions();
   const SIZE = width * 0.56;
-  const [newData] = useState([
+  const [newData, setNewData] = useState([
     { key: "spacer-left" },
     ...data,
     { key: "spacer-right" },
   ]);
+
   const SPACER = (width - SIZE) / 2;
   const x = useSharedValue(0);
   const onScroll = useAnimatedScrollHandler({
@@ -32,14 +36,14 @@ const MoviesMain = (props) => {
       x.value = event.contentOffset.x;
     },
   });
-  const [currentTime, setCurrentTime] = useState("");
-  const [currentName, setCurrentName] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(0);
+  // const [currentTime, setCurrentTime] = useState("");
+  // const [currentName, setCurrentName] = useState("");
+  // const [currentIndex, setCurrentIndex] = useState(0);
 
-  useEffect(() => {
-    setCurrentName(data[currentIndex].name);
-    setCurrentTime(data[currentIndex].time);
-  }, [currentIndex]);
+  // useEffect(() => {
+  //   setCurrentName(data[currentIndex].name);
+  //   setCurrentTime(data[currentIndex].time);
+  // }, [currentIndex]);
 
   const handleToDetailMovie = () => {
     navigation.navigate("DetailMovieScreen");
@@ -67,7 +71,7 @@ const MoviesMain = (props) => {
               transform: [{ scale }],
             };
           });
-          if (!item.image) {
+          if (!item.anhBia) {
             return <View style={{ width: SPACER }} key={index} />;
           }
           return (
@@ -79,7 +83,7 @@ const MoviesMain = (props) => {
               <Animated.View style={[styles.imageContainer, style]}>
                 <Image
                   style={styles.imageItem}
-                  source={item.image}
+                  source={{ uri: item.anhBia }}
                   key={item._id}
                 />
               </Animated.View>

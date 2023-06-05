@@ -10,31 +10,15 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import RadioGroup from "react-native-radio-buttons-group";
 import MoviesMain from "./MoviesMain";
 import ItemMoreMovies from "./Item/ItemMoreMovies";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import config from "../../config/config";
 
 const HomeScreen = (props) => {
   const { navigation } = props;
-  const listPrograms = [
-    {
-      _id: 1,
-      img: require("../../images/advertise1.jpg"),
-    },
-    {
-      _id: 2,
-      img: require("../../images/advertise2.png"),
-    },
-    {
-      _id: 3,
-      img: require("../../images/advertise3.jpg"),
-    },
-    {
-      _id: 4,
-      img: require("../../images/advertise4.jpg"),
-    },
-  ];
 
   const listTab = [
     {
@@ -54,25 +38,29 @@ const HomeScreen = (props) => {
   const listMovies = [
     {
       _id: 1,
-      image: require("../../images/poster1.jpg"),
+      anhBia:
+        "http://192.168.1.39:3000/images/image-1685941443683-40774320-movie3.jpg",
       name: "Spider-man: No way home",
       time: "1h 24p",
     },
     {
       _id: 2,
-      image: require("../../images/poster2.jpg"),
+      anhBia:
+        "http://192.168.1.39:3000/images/image-1685941443683-40774320-movie3.jpg",
       name: "Spider-man: The amazing Spider-man",
       time: "1h 24p",
     },
     {
       _id: 3,
-      image: require("../../images/poster3.jpg"),
+      anhBia:
+        "http://192.168.1.39:3000/images/image-1685941443683-40774320-movie3.jpg",
       name: "Spider-man: end",
       time: "1h 24p",
     },
     {
       _id: 4,
-      image: require("../../images/poster4.jpg"),
+      anhBia:
+        "http://192.168.1.39:3000/images/image-1685941443683-40774320-movie3.jpg",
       name: "Lật mặt",
       time: "1h 24p",
     },
@@ -108,6 +96,52 @@ const HomeScreen = (props) => {
       point: 7.1,
     },
   ];
+
+  const [dataEvent, setDataEvent] = useState("");
+  const [dataMovie, setDataMovie] = useState("");
+  useEffect(() => {
+    const getAllEvents = async () => {
+      let token = await AsyncStorage.getItem("token");
+      const fetchData = async () => {
+        let url = `${config.CONSTANTS.IP}api/event/getAllEvent`;
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+        const res = await response.json();
+        return res;
+      };
+      const res = await fetchData();
+      setDataEvent(res.events);
+    };
+    getAllEvents();
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    const getAllMovies = async () => {
+      let token = await AsyncStorage.getItem("token");
+      const fetchData = async () => {
+        let url = `${config.CONSTANTS.IP}api/movie/getAllMovies`;
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+        const res = await response.json();
+        return res;
+      };
+      const res = await fetchData();
+      setDataMovie(res.movies);
+    };
+    getAllMovies();
+    return () => {};
+  }, []);
 
   const [status, setStatus] = useState("Đang chiếu");
   const setStatusFilter = (status) => {
@@ -148,11 +182,14 @@ const HomeScreen = (props) => {
         {/* Danh sách chương trình khuyến mãi */}
         <View>
           <FlatList
-            data={listPrograms}
+            data={dataEvent}
             showsHorizontalScrollIndicator={false}
             horizontal={true}
             renderItem={({ item }) => (
-              <Image style={styles.itemProgram} source={item.img} />
+              <Image
+                style={styles.itemProgram}
+                source={{ uri: item.anhBiaSuKien }}
+              />
             )}
             keyExtractor={(item) => item._id}
           />
