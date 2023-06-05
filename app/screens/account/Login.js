@@ -10,6 +10,7 @@ import {
   ToastAndroid,
 } from "react-native";
 import { AccountContext } from "../../context/AccountContext";
+import { CinemaContext } from "../../context/CinemaContext";
 import React, { useContext, useState, useEffect } from "react";
 import config from "../../config/config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -18,6 +19,7 @@ const Login = (props) => {
   const { navigation } = props;
   const { setIsLoggedIn, setDataAccount, rememberEmailRegister } =
     useContext(AccountContext);
+  const { setDataMovie } = useContext(CinemaContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showErrowEmail, setShowErrowEmail] = useState("none");
@@ -61,6 +63,28 @@ const Login = (props) => {
     return () => {};
   }, [rememberEmailRegister]);
 
+  useEffect(() => {
+    const getAllMovies = async () => {
+      let token = await AsyncStorage.getItem("token");
+      const fetchData = async () => {
+        let url = `${config.CONSTANTS.IP}api/movie/getAllMovies`;
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+        const res = await response.json();
+        return res;
+      };
+      const res = await fetchData();
+      setDataMovie(res.movies);
+    };
+    getAllMovies();
+    return () => {};
+  }, []);
+
   const handleLogin = async () => {
     let data = { email, password };
     const fetchData = async (data) => {
@@ -91,6 +115,7 @@ const Login = (props) => {
   const handleRegister = () => {
     navigation.navigate("Register");
   };
+
   return (
     <ScrollView style={styles.Container}>
       <Pressable onPress={handleRegister}>

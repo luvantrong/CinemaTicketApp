@@ -10,17 +10,18 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import RadioGroup from "react-native-radio-buttons-group";
 import MoviesMain from "./MoviesMain";
 import ItemMoreMovies from "./Item/ItemMoreMovies";
 import ItemEventHomeScreen from "../Event/Item/ItemEventHomeScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import config from "../../config/config";
+import { CinemaContext } from "../../context/CinemaContext";
 
 const HomeScreen = (props) => {
   const { navigation } = props;
-
+  const { dataMovie } = useContext(CinemaContext);
   const listTab = [
     {
       status: "Đang chiếu",
@@ -99,7 +100,6 @@ const HomeScreen = (props) => {
   ];
 
   const [dataEvent, setDataEvent] = useState("");
-  const [dataMovie, setDataMovie] = useState("");
   useEffect(() => {
     const getAllEvents = async () => {
       let token = await AsyncStorage.getItem("token");
@@ -119,28 +119,6 @@ const HomeScreen = (props) => {
       setDataEvent(res.events);
     };
     getAllEvents();
-    return () => {};
-  }, []);
-
-  useEffect(() => {
-    const getAllMovies = async () => {
-      let token = await AsyncStorage.getItem("token");
-      const fetchData = async () => {
-        let url = `${config.CONSTANTS.IP}api/movie/getAllMovies`;
-        const response = await fetch(url, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
-        const res = await response.json();
-        return res;
-      };
-      const res = await fetchData();
-      setDataMovie(res.movies);
-    };
-    getAllMovies();
     return () => {};
   }, []);
 
@@ -212,7 +190,7 @@ const HomeScreen = (props) => {
           ))}
         </View>
         {/* danh sách phim */}
-        <MoviesMain data={listMovies} navigation={navigation} />
+        <MoviesMain data={dataMovie} navigation={navigation} />
         {/* thanh tìm kiếm */}
         <View style={styles.inputSearch}>
           <TextInput style={styles.is_inputText} placeholder="TÌm phim ..." />

@@ -45,10 +45,6 @@ const MoviesMain = (props) => {
   //   setCurrentTime(data[currentIndex].time);
   // }, [currentIndex]);
 
-  const handleToDetailMovie = () => {
-    navigation.navigate("DetailMovieScreen");
-  };
-
   return (
     <View style={styles.container}>
       <Animated.ScrollView
@@ -76,7 +72,9 @@ const MoviesMain = (props) => {
           }
           return (
             <Pressable
-              onPress={handleToDetailMovie}
+              onPress={() => {
+                navigation.navigate("DetailMovieScreen", { data: item });
+              }}
               style={{ width: SIZE }}
               key={index}
             >
