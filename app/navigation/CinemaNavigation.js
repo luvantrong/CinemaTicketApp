@@ -31,12 +31,12 @@ const HomeStack = () => {
 const ProfileStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Profile"
+      initialRouteName="Profiles"
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Stack.Screen name="Profile" component={Profiles} />
+      <Stack.Screen name="Profiles" component={Profiles} />
       <Stack.Screen name="ChangePass" component={ChangePass} />
       <Stack.Screen name="EditProfile" component={EditProfile} />
     </Stack.Navigator>
@@ -51,8 +51,8 @@ const ABStack = () => {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="HomePage2" component={DetailMovieScreen} />
-      <Stack.Screen name="ListMoviesScreent2" component={ListMoviesScreen} />
+      <Stack.Screen name="HomePage2" component={ListMoviesScreen} />
+      <Stack.Screen name="ListMoviesScreent2" component={DetailMovieScreen} />
     </Stack.Navigator>
   );
 };
@@ -73,41 +73,41 @@ const CinemaNavigation = () => {
         },
         tabBarStyle: {
           height: 60,
-          paddingBottom: 6,
-          paddingTop: 3,
+          paddingBottom: 10,
+          paddingTop: 10,
         },
         tabBarIcon: ({ focused, color, size }) => {
           if (route.name === "Home") {
             return (
               <Image
                 style={{
-                  width: 24,
-                  height: 24,
+                  width: 18,
+                  height: 18,
                   tintColor: focused ? "#52CC6D" : "#828282",
                 }}
-                source={require("../images/address.png")}
+                source={require("../images/iconHome.png")}
               />
             );
           } else if (route.name === "Search") {
             return (
               <Image
                 style={{
-                  width: 24,
-                  height: 24,
+                  width: 17,
+                  height: 17,
                   tintColor: focused ? "#52CC6D" : "#828282",
                 }}
-                source={require("../images/address.png")}
+                source={require("../images/iconSearch.png")}
               />
             );
-          } else if (route.name === "Cart") {
+          } else if (route.name === "Profile") {
             return (
               <Image
                 style={{
-                  width: 27.31,
-                  height: 24,
+                  width: 16,
+                  height: 19,
                   tintColor: focused ? "#52CC6D" : "#828282",
                 }}
-                source={require("../images/address.png")}
+                source={require("../images/iconProfile.png")}
               />
             );
           }
@@ -115,8 +115,8 @@ const CinemaNavigation = () => {
       })}
     >
       <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name="Search" component={ProfileStack} />
-      <Tab.Screen name="Cart" component={ABStack} />
+      <Tab.Screen name="Search" component={ABStack} />
+      <Tab.Screen name="Profile" component={ProfileStack} />
     </Tab.Navigator>
   );
 };

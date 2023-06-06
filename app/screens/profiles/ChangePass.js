@@ -6,6 +6,7 @@ import {
   Image,
   TextInput,
   ToastAndroid,
+  Alert,
 } from "react-native";
 import React, { useState, useContext } from "react";
 import { AccountContext } from "../../context/AccountContext";
@@ -13,7 +14,8 @@ import config from "../../config/config";
 
 const ChangePass = (props) => {
   const { navigation } = props;
-  const { dataAccount, setIsLoggedIn } = useContext(AccountContext);
+  const { dataAccount, setIsLoggedIn, setDataAccount } =
+    useContext(AccountContext);
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [oldPassword, setOldPassword] = useState("");
@@ -55,6 +57,8 @@ const ChangePass = (props) => {
   const toggleEnterThePass = () => {
     setenterThePass(!enterThePass);
   };
+
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -66,7 +70,7 @@ const ChangePass = (props) => {
       <View style={styles.editImgChangePass}>
         <Image
           style={styles.imgProfile}
-          source={require("../../images/imgProfile.jpg")}
+          source={{ uri: dataAccount.avatar }}
         ></Image>
       </View>
 
@@ -100,7 +104,7 @@ const ChangePass = (props) => {
         </View>
         <View>
           <TextInput
-            secureTextEnry={newPass}
+            secureTextEntry={newPass}
             placeholder="New Password"
             placeholderTextColor={"white"}
             style={styles.editInputCenter}

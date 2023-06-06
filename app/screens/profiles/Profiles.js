@@ -6,15 +6,19 @@ import {
   TouchableOpacity,
   Switch,
   Pressable,
+  Alert,
+  ToastAndroid,
 } from "react-native";
 import React, { useState, useContext, useEffect } from "react";
 import { AccountContext } from "../../context/AccountContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profiles = (props) => {
   const { navigation } = props;
   const [isEnabledNotification, setIsEnabledNotifications] = useState(true);
   const [isEnabledDarkMode, setIsEnabledDarkMode] = useState(true);
-  const { dataAccount } = useContext(AccountContext);
+  const { dataAccount, setIsLoggedIn, setDataAccount } =
+    useContext(AccountContext);
   const [avatar, setAvatar] = useState(null);
   useEffect(() => {
     dataAccount.avatar === "" ? setAvatar(null) : setAvatar(dataAccount.avatar);
@@ -30,6 +34,26 @@ const Profiles = (props) => {
     navigation.navigate("EditProfile");
   };
 
+  const handleLogout = async () => {
+    Alert.alert("Thông báo", "Bạn có chắc chắn muốn đăng xuất không?", [
+      {
+        text: "Huỷ",
+        // onPress: () => console.log('Cancel Pressed'),
+        style: "cancel",
+      },
+      {
+        text: "Đăng xuất",
+        onPress: async () => {
+          ToastAndroid.show("Đăng xuất thành công", ToastAndroid.SHORT);
+          // navigation.navigate("Home");
+          await AsyncStorage.removeItem("token");
+          setDataAccount("");
+          setIsLoggedIn(false);
+        },
+      },
+    ]);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -43,7 +67,7 @@ const Profiles = (props) => {
           <Image style={styles.imgProfile} source={{ uri: avatar }}></Image>
         </View>
         <View style={styles.introduceCenter}>
-          <Text style={styles.textCenterTitle}>QT with you</Text>
+          <Text style={styles.textCenterTitle}>{dataAccount.name}</Text>
           <Text style={styles.textCenterAddress}>{dataAccount.email}</Text>
         </View>
         <TouchableOpacity style={styles.btnEdit} onPress={handleEditProfile}>
@@ -115,7 +139,10 @@ const Profiles = (props) => {
           ></Switch>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.content, { marginTop: 35 }]}>
+        <TouchableOpacity
+          style={[styles.content, { marginTop: 35 }]}
+          onPress={handleLogout}
+        >
           <View style={styles.contentFunction}>
             <Image
               style={styles.contentFunctionImage}
@@ -192,7 +219,7 @@ const styles = StyleSheet.create({
   btnEdit: {
     backgroundColor: "#FFE600",
     borderRadius: 30,
-    marginTop: 20,
+    marginTop: 14,
   },
 
   textEdit: {
@@ -235,7 +262,7 @@ const styles = StyleSheet.create({
 
   footer: {
     flex: 0.2,
-    marginTop: 20,
+    marginTop: 15,
     justifyContent: "center",
   },
 });
