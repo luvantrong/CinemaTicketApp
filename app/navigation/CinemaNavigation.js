@@ -65,16 +65,17 @@ const CinemaNavigation = () => {
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarHideOnKeyboard: true,
-        tabBarActiveTintColor: "#52CC6D",
+        tabBarActiveTintColor: "#FF8036",
         tabBarInactiveTintColor: "#828282",
         tabBarLabelStyle: {
-          fontSize: 12,
+          fontSize: 14,
           fontWeight: "400",
         },
         tabBarStyle: {
           height: 60,
-          paddingBottom: 10,
+          paddingBottom: 8,
           paddingTop: 10,
+          backgroundColor: "#1A2232",
         },
         tabBarIcon: ({ focused, color, size }) => {
           if (route.name === "Home") {
@@ -83,7 +84,7 @@ const CinemaNavigation = () => {
                 style={{
                   width: 18,
                   height: 18,
-                  tintColor: focused ? "#52CC6D" : "#828282",
+                  tintColor: focused ? "#FF8036" : "#828282",
                 }}
                 source={require("../images/iconHome.png")}
               />
@@ -94,7 +95,7 @@ const CinemaNavigation = () => {
                 style={{
                   width: 17,
                   height: 17,
-                  tintColor: focused ? "#52CC6D" : "#828282",
+                  tintColor: focused ? "#FF8036" : "#828282",
                 }}
                 source={require("../images/iconSearch.png")}
               />
@@ -105,7 +106,7 @@ const CinemaNavigation = () => {
                 style={{
                   width: 16,
                   height: 19,
-                  tintColor: focused ? "#52CC6D" : "#828282",
+                  tintColor: focused ? "#FF8036" : "#828282",
                 }}
                 source={require("../images/iconProfile.png")}
               />

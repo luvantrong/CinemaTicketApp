@@ -192,7 +192,7 @@ const HomeScreen = (props) => {
         {/* danh sách phim */}
         <MoviesMain data={dataMovie} navigation={navigation} />
         {/* thanh tìm kiếm */}
-        <View style={styles.inputSearch}>
+        {/* <View style={styles.inputSearch}>
           <TextInput style={styles.is_inputText} placeholder="TÌm phim ..." />
           <Pressable>
             <Image
@@ -200,7 +200,7 @@ const HomeScreen = (props) => {
               source={require("../../images/search.png")}
             />
           </Pressable>
-        </View>
+        </View> */}
         {/* banner */}
         <View style={styles.banner}>
           <Image
@@ -219,6 +219,7 @@ const HomeScreen = (props) => {
           <FlatList
             data={dataMovie}
             horizontal={true}
+            showsVerticalScrollIndicator={true}
             renderItem={({ item }) => (
               <ItemMoreMovies data={item} navigation={navigation} />
             )}
@@ -238,6 +239,7 @@ const styles = StyleSheet.create({
     // height: Dimensions.get('screen').height,
     flex: 1,
     backgroundColor: "#1A2232",
+    paddingBottom: 20,
   },
 
   imgBackground: {
@@ -353,6 +355,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 10,
+    marginTop: 10,
   },
 
   bannerImage: {

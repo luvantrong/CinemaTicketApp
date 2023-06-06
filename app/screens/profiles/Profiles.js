@@ -115,7 +115,7 @@ const Profiles = (props) => {
           <Text style={styles.textFunction}>Notifications</Text>
         </View>
         <Switch
-          trackColor={{ false: "grey", true: "tomato" }}
+          trackColor={{ false: "grey", true: "orange" }}
           thumbColor={isEnabledNotification ? "#f4f3f4" : "#f4f3f4"}
           value={isEnabledNotification}
           onValueChange={setIsEnabledNotifications}
@@ -132,7 +132,7 @@ const Profiles = (props) => {
             <Text style={styles.textFunction}>Dark Mode</Text>
           </View>
           <Switch
-            trackColor={{ false: "grey", true: "tomato" }}
+            trackColor={{ false: "grey", true: "orange" }}
             thumbColor={isEnabledDarkMode ? "#f4f3f4" : "#f4f3f4"}
             value={isEnabledDarkMode}
             onValueChange={setIsEnabledDarkMode}
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
   },
 
   btnEdit: {
-    backgroundColor: "#FFE600",
+    backgroundColor: "orange",
     borderRadius: 30,
     marginTop: 14,
   },
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
   contentFunctionImage: {
     width: 20,
     height: 20,
-    tintColor: "yellow",
+    tintColor: "orange",
   },
 
   textFunction: {
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
   },
 
   imgBack: {
-    tintColor: "yellow",
+    tintColor: "orange",
   },
 
   footer: {

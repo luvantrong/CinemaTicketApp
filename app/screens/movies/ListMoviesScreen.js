@@ -5,6 +5,7 @@ import {
   View,
   Image,
   FlatList,
+  TextInput,
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
@@ -36,6 +37,16 @@ const ListMoviesScreen = (props) => {
         </View>
         <Pressable style={styles.TC_btnAccount}>
           <Text style={styles.TC_textBtn}>{dataAccount.name}</Text>
+        </Pressable>
+      </View>
+
+      <View style={styles.inputSearch}>
+        <TextInput style={styles.is_inputText} placeholder="Tìm phim ..." />
+        <Pressable>
+          <Image
+            style={styles.is_btnSearch}
+            source={require("../../images/search.png")}
+          />
         </Pressable>
       </View>
       {/* Tiêu đề */}
@@ -129,5 +140,32 @@ const styles = StyleSheet.create({
   listMovieContainer: {
     width: Dimensions.get("screen").width,
     flex: 1,
+  },
+
+  // thanh tìm kiếm
+  inputSearch: {
+    backgroundColor: "#F5EFE7",
+    width: "100%",
+    height: 50,
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: "rgba(0, 0, 0, 0.1)",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+
+  is_inputText: {
+    paddingRight: 30,
+    flex: 8,
+    fontSize: 16,
+    fontFamily: "Roboto",
+  },
+
+  is_btnSearch: {
+    width: 30,
+    heigh: 30,
+    resizeMode: "contain",
+    flex: 2,
+    margin: 10,
   },
 });

@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   Container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: "pink",
+    backgroundColor: "orange",
   },
   ViewTextSignIn: {
     paddingTop: 50,
