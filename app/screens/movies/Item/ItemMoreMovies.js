@@ -32,7 +32,7 @@ export default ItemMoreMovies;
 const styles = StyleSheet.create({
   container: {
     width: Dimensions.get("screen").width / 2,
-    height: 300,
+    height: 350,
   },
 
   posterImage: {

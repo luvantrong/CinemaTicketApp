@@ -6,63 +6,19 @@ import {
   Image,
   FlatList,
 } from "react-native";
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import ItemMoreMovies from "./Item/ItemMoreMovies";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import config from "../../config/config";
+import { CinemaContext } from "../../context/CinemaContext";
+import { AccountContext } from "../../context/AccountContext";
 
 const ListMoviesScreen = (props) => {
   const { navigation } = props;
-  const listMovies = [
-    {
-      _id: 1,
-      image: require("../../images/poster1.jpg"),
-      name: "Spider-man 1",
-      type: "Action",
-      point: 8.0,
-    },
-    {
-      _id: 2,
-      image: require("../../images/poster2.jpg"),
-      name: "Spider-man 2",
-      type: "Action",
-      point: 8.5,
-    },
-    {
-      _id: 3,
-      image: require("../../images/poster3.jpg"),
-      name: "Spider-man 3",
-      type: "Action",
-      point: 6.0,
-    },
-    {
-      _id: 4,
-      image: require("../../images/poster4.jpg"),
-      name: "Tấm vé định mệnh",
-      type: "Action",
-      point: 7.1,
-    },
-    {
-      _id: 5,
-      image: require("../../images/poster1.jpg"),
-      name: "Tấm vé định mệnh",
-      type: "Action",
-      point: 7.1,
-    },
-    {
-      _id: 6,
-      image: require("../../images/poster2.jpg"),
-      name: "Tấm vé định mệnh",
-      type: "Action",
-      point: 7.1,
-    },
-    {
-      _id: 7,
-      image: require("../../images/poster3.jpg"),
-      name: "Tấm vé định mệnh",
-      type: "Action",
-      point: 7.1,
-    },
-  ];
+  const { dataMovie } = useContext(CinemaContext);
+  const { dataAccount } = useContext(AccountContext);
+
   return (
     <View style={styles.container}>
       {/* Thanh điều hướng */}
@@ -79,7 +35,7 @@ const ListMoviesScreen = (props) => {
           <Text style={styles.MC_textAddress}>Nur-Sultan</Text>
         </View>
         <Pressable style={styles.TC_btnAccount}>
-          <Text style={styles.TC_textBtn}>Log in</Text>
+          <Text style={styles.TC_textBtn}>{dataAccount.name}</Text>
         </Pressable>
       </View>
       {/* Tiêu đề */}
@@ -87,7 +43,7 @@ const ListMoviesScreen = (props) => {
       {/* Danh sách phim */}
       <View style={styles.listMovieContainer}>
         <FlatList
-          data={listMovies}
+          data={dataMovie}
           renderItem={({ item }) => (
             <ItemMoreMovies data={item} navigation={navigation} />
           )}
