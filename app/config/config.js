@@ -1,6 +1,8 @@
 const CONSTANTS = {
   //Home
   IP: 'http://192.168.1.39:3000/',
+  // IP: 'http://192.168.1.144:3000/',
+
   //School
   // IP: 'http://172.16.66.115:3000/',
   //HighLands
