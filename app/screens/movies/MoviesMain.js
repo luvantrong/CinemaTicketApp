@@ -20,7 +20,6 @@ import config from "../../config/config";
 
 const MoviesMain = (props) => {
   const { data, navigation } = props;
-  console.log(data);
   const { width } = useWindowDimensions();
   const SIZE = width * 0.56;
   const [newData, setNewData] = useState([

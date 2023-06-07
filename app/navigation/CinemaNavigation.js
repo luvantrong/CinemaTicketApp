@@ -9,6 +9,7 @@ import EditProfile from "../screens/profiles/EditProfile";
 import ChangePass from "../screens/profiles/ChangePass";
 import HomeScreen from "../screens/movies/HomeScreen";
 import EventScreen from "../screens/Event/EventScreen";
+import BookTicket from "../screens/movies/BookTicket";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ const HomeStack = () => {
       <Stack.Screen name="ListMoviesScreen" component={ListMoviesScreen} />
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="EventScreen" component={EventScreen} />
+      <Stack.Screen name="BookTicket" component={BookTicket} />
     </Stack.Navigator>
   );
 };
@@ -43,7 +45,7 @@ const ProfileStack = () => {
   );
 };
 
-const ABStack = () => {
+const SearchStack = () => {
   return (
     <Stack.Navigator
       initialRouteName="HomePage2"
@@ -116,7 +118,7 @@ const CinemaNavigation = () => {
       })}
     >
       <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name="Search" component={ABStack} />
+      <Tab.Screen name="Search" component={SearchStack} />
       <Tab.Screen name="Profile" component={ProfileStack} />
     </Tab.Navigator>
   );

@@ -17,36 +17,6 @@ import config from "../../config/config";
 const DetailMovieScreen = (props) => {
   const { navigation } = props;
   const { data } = props?.route?.params;
-  const moreMovies = [
-    {
-      _id: 1,
-      image: require("../../images/poster1.jpg"),
-      name: "Spider-man 1",
-      type: "Action",
-      point: 8.0,
-    },
-    {
-      _id: 2,
-      image: require("../../images/poster2.jpg"),
-      name: "Spider-man 2",
-      type: "Action",
-      point: 8.5,
-    },
-    {
-      _id: 3,
-      image: require("../../images/poster3.jpg"),
-      name: "Spider-man 3",
-      type: "Action",
-      point: 6.0,
-    },
-    {
-      _id: 4,
-      image: require("../../images/poster4.jpg"),
-      name: "Tấm vé định mệnh",
-      type: "Action",
-      point: 7.1,
-    },
-  ];
 
   const [dataMovie, setDataMovie] = useState("");
 
@@ -72,6 +42,10 @@ const DetailMovieScreen = (props) => {
     return () => {};
   }, []);
 
+  const handleToBookTicket = () => {
+    navigation.navigate("BookTicket", { data: data });
+  };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
@@ -93,7 +67,10 @@ const DetailMovieScreen = (props) => {
             locations={[0, 0.9]}
             colors={["rgba(0,0,0,0)", "rgb(26,34,50)"]}
           >
-            <Pressable style={styles.HC_btnGetTicket}>
+            <Pressable
+              style={styles.HC_btnGetTicket}
+              onPress={handleToBookTicket}
+            >
               <Image
                 style={styles.HC_iconTicket}
                 source={require("../../images/ticket.png")}

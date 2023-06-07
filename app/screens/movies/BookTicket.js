@@ -7,19 +7,27 @@ import {
   Button,
   FlatList,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import DatePicker from "react-native-date-picker";
 import moment from "moment/moment";
 import { ScrollView } from "react-native-gesture-handler";
 import InputSpinner from "react-native-input-spinner";
 import NumericInput from "react-native-numeric-input";
 import ItemPopcorn from "./Item/ItemPopcorn";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import config from "../../config/config";
+import { CinemaContext } from "../../context/CinemaContext";
 
 const BookTicket = (props) => {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
   const { navigation } = props;
+  const { data } = props?.route?.params;
+
+  console.log(data);
+  const { dataPopcorn } = useContext(CinemaContext);
+  console.log(dataPopcorn);
 
   useEffect(() => {
     setText(moment(date).format("DD/MM/YYYY"));
@@ -44,6 +52,10 @@ const BookTicket = (props) => {
     "17:00",
     "18:00",
     "19:00",
+    "20:00",
+    "21:00",
+    "22:00",
+    "23:00",
   ]);
 
   if (selectedIndex !== null) {
@@ -245,6 +257,20 @@ const BookTicket = (props) => {
 
             <View style={styles.row}>
               {[8, 9, 10, 11].map((index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={[
+                    styles.btnTime,
+                    { backgroundColor: backgroundColorList[index] },
+                  ]}
+                  onPress={() => handlePress(index)}
+                >
+                  <Text style={styles.time}>{textList[index]}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+            <View style={styles.row}>
+              {[12, 13, 14, 15].map((index) => (
                 <TouchableOpacity
                   key={index}
                   style={[
@@ -578,7 +604,7 @@ const BookTicket = (props) => {
                             showsVerticalScrollIndicator={false}
                         />  */
 
-            data.map((item) => (
+            dataPopcorn.map((item) => (
               <ItemPopcorn key={item._id} data={item} navigation={navigation} />
             ))
           }

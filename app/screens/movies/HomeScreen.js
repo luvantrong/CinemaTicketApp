@@ -21,7 +21,7 @@ import { CinemaContext } from "../../context/CinemaContext";
 
 const HomeScreen = (props) => {
   const { navigation } = props;
-  const { dataMovie } = useContext(CinemaContext);
+  const { dataMovie, setDataPopcorn } = useContext(CinemaContext);
   const listTab = [
     {
       status: "Đang chiếu",
@@ -36,70 +36,8 @@ const HomeScreen = (props) => {
       _id: 3,
     },
   ];
-
-  const listMovies = [
-    {
-      _id: 1,
-      anhBia:
-        "http://192.168.1.39:3000/images/image-1685941443683-40774320-movie3.jpg",
-      name: "Spider-man: No way home",
-      time: "1h 24p",
-    },
-    {
-      _id: 2,
-      anhBia:
-        "http://192.168.1.39:3000/images/image-1685941443683-40774320-movie3.jpg",
-      name: "Spider-man: The amazing Spider-man",
-      time: "1h 24p",
-    },
-    {
-      _id: 3,
-      anhBia:
-        "http://192.168.1.39:3000/images/image-1685941443683-40774320-movie3.jpg",
-      name: "Spider-man: end",
-      time: "1h 24p",
-    },
-    {
-      _id: 4,
-      anhBia:
-        "http://192.168.1.39:3000/images/image-1685941443683-40774320-movie3.jpg",
-      name: "Lật mặt",
-      time: "1h 24p",
-    },
-  ];
-
-  const moreMovies = [
-    {
-      _id: 1,
-      image: require("../../images/poster1.jpg"),
-      name: "Spider-man 1",
-      type: "Action",
-      point: 8.0,
-    },
-    {
-      _id: 2,
-      image: require("../../images/poster2.jpg"),
-      name: "Spider-man 2",
-      type: "Action",
-      point: 8.5,
-    },
-    {
-      _id: 3,
-      image: require("../../images/poster3.jpg"),
-      name: "Spider-man 3",
-      type: "Action",
-      point: 6.0,
-    },
-    {
-      _id: 4,
-      image: require("../../images/poster4.jpg"),
-      name: "Tấm vé định mệnh",
-      type: "Action",
-      point: 7.1,
-    },
-  ];
-
   const [dataEvent, setDataEvent] = useState("");
+  
   useEffect(() => {
     const getAllEvents = async () => {
       let token = await AsyncStorage.getItem("token");
@@ -130,6 +68,28 @@ const HomeScreen = (props) => {
   const handleToAllMovies = () => {
     navigation.navigate("ListMoviesScreen");
   };
+
+  useEffect(() => {
+    const getAllPopcorns = async () => {
+      let token = await AsyncStorage.getItem("token");
+      const fetchData = async () => {
+        let url = `${config.CONSTANTS.IP}api/popcorn/getAllPopcorn`;
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+        const res = await response.json();
+        return res;
+      };
+      const res = await fetchData();
+      setDataPopcorn(res.popcorns);
+    };
+    getAllPopcorns();
+    return () => {};
+  }, []);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>

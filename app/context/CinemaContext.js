@@ -4,13 +4,15 @@ export const CinemaContext = createContext();
 
 export const CinemaConTextProvider = (props) => {
   const { children } = props;
-  const [dataMovie, setDataMovie] = useState(false);
-
+  const [dataMovie, setDataMovie] = useState("");
+  const [dataPopcorn, setDataPopcorn] = useState("");
   return (
     <CinemaContext.Provider
       value={{
         dataMovie,
         setDataMovie,
+        dataPopcorn,
+        setDataPopcorn,
       }}
     >
       {children}

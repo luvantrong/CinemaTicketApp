@@ -101,7 +101,6 @@ const Login = (props) => {
       return res;
     };
     const res = await fetchData(data);
-    console.log(res);
 
     if (res.result) {
       setIsLoggedIn(true);
