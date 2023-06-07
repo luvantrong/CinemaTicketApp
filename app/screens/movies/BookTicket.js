@@ -24,13 +24,124 @@ const BookTicket = (props) => {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
   const { data } = props?.route?.params;
+
+  const [selectedSeat, setSelectedSeat] = useState(null);
+  const [seats, setSeats] = useState([
+    { id: "A0", status: "available" },
+    { id: "A1", status: "available" },
+    { id: "A2", status: "available" },
+    { id: "A3", status: "available" },
+    { id: "A4", status: "available" },
+    { id: "A5", status: "available" },
+    { id: "A6", status: "available" },
+    { id: "A7", status: "available" },
+    { id: "B0", status: "available" },
+    { id: "B1", status: "booked" },
+    { id: "B2", status: "available" },
+    { id: "B3", status: "booked" },
+    { id: "B4", status: "available" },
+    { id: "B5", status: "booked" },
+    { id: "B6", status: "available" },
+    { id: "B7", status: "booked" },
+    { id: "C0", status: "available" },
+    { id: "C1", status: "available" },
+    { id: "C2", status: "available" },
+    { id: "C3", status: "available" },
+    { id: "C4", status: "available" },
+    { id: "C5", status: "available" },
+    { id: "C6", status: "available" },
+    { id: "C7", status: "available" },
+    { id: "D0", status: "available" },
+    { id: "D1", status: "available" },
+    { id: "D2", status: "available" },
+    { id: "D3", status: "available" },
+    { id: "D4", status: "available" },
+    { id: "D5", status: "available" },
+    { id: "D6", status: "available" },
+    { id: "D7", status: "available" },
+    { id: "E0", status: "available" },
+    { id: "E1", status: "available" },
+    { id: "E2", status: "available" },
+    { id: "E3", status: "available" },
+    { id: "E4", status: "available" },
+    { id: "E5", status: "available" },
+    { id: "E6", status: "available" },
+    { id: "E7", status: "available" },
+    { id: "F0", status: "available" },
+    { id: "F1", status: "available" },
+    { id: "F2", status: "available" },
+    { id: "F3", status: "available" },
+    { id: "F4", status: "available" },
+    { id: "F5", status: "available" },
+    { id: "F6", status: "available" },
+    { id: "F7", status: "available" },
+    { id: "G0", status: "available" },
+    { id: "G1", status: "available" },
+    { id: "G2", status: "available" },
+    { id: "G3", status: "available" },
+    { id: "G4", status: "available" },
+    { id: "G5", status: "available" },
+    { id: "G6", status: "available" },
+    { id: "G7", status: "available" },
+    { id: "H0", status: "available" },
+    { id: "H1", status: "available" },
+    { id: "H2", status: "available" },
+    { id: "H3", status: "available" },
+    { id: "H4", status: "available" },
+    { id: "H5", status: "available" },
+    { id: "H6", status: "available" },
+    { id: "H7", status: "available" },
+    { id: "K0", status: "available" },
+    { id: "K1", status: "available" },
+    { id: "K2", status: "available" },
+    { id: "K3", status: "available" },
+    { id: "K4", status: "available" },
+    { id: "K5", status: "available" },
+    { id: "K6", status: "available" },
+    { id: "K7", status: "available" },
+    { id: "L0", status: "available" },
+    { id: "L1", status: "available" },
+    { id: "L2", status: "available" },
+    { id: "L3", status: "available" },
+    { id: "L4", status: "available" },
+    { id: "L5", status: "available" },
+    { id: "L6", status: "available" },
+    { id: "L7", status: "available" },
+    { id: "L8", status: "available" },
+    { id: "L9", status: "available" },
+  ]);
+
+  const handleSeatPress = (seatId, seatStatus) => {
+    if (seatStatus === "available") {
+      const newSeats = seats.map((seat) => {
+        if (seat.id === seatId) {
+          return { ...seat, status: "selected" };
+        } else {
+          return seat;
+        }
+      });
+
+      setSeats(newSeats);
+      setSelectedSeat(seatId);
+    } else if (seatStatus === "selected") {
+      const newSeats = seats.map((seat) => {
+        if (seat.id === seatId) {
+          return { ...seat, status: "available" };
+        } else {
+          return seat;
+        }
+      });
+
+      setSeats(newSeats);
+      setSelectedSeat(seatId);
+    }
+  };
   const nameMovie = data.tenPhim;
   const hanldeToPayment = () => {
     navigation.navigate("Payment");
   };
 
   const { dataPopcorn } = useContext(CinemaContext);
- 
 
   console.log(dataPopcorn);
 
@@ -39,9 +150,9 @@ const BookTicket = (props) => {
   }, [date]);
 
   const [selectedIndex, setSelectedIndex] = useState(null);
- 
 
-  const [dataTicketDateAndNameMovie, setDataTicketDateAndNameMovie] = useState("")
+  const [dataTicketDateAndNameMovie, setDataTicketDateAndNameMovie] =
+    useState("");
   const getTicketByDateandNameMovie = async (date, nameMovie) => {
     let data = { date, nameMovie };
     const fetchData = async (data) => {
@@ -55,24 +166,21 @@ const BookTicket = (props) => {
       return res;
     };
     const res = await fetchData(data);
-      setDataTicketDateAndNameMovie(res.Ticket);
-      console.log(dataTicketDateAndNameMovie)
-  }
-  let tickets = [1,2,3];
-  const getDataTicketByTime = (time)=>{
+    setDataTicketDateAndNameMovie(res.Ticket);
+    console.log(dataTicketDateAndNameMovie);
+  };
+  let tickets = [1, 2, 3];
+  const getDataTicketByTime = (time) => {
     // const tickets = dataTicketDateAndNameMovie.filter(ticket => ticket.suatXem !== time);
     console.log(tickets);
     tickets.splice(0, tickets.length);
     const newTickets = [...dataTicketDateAndNameMovie];
     for (let i = 0; i < newTickets.length; i++) {
       if (newTickets[i].suatXem === time) {
-          tickets.push(newTickets[i]);
+        tickets.push(newTickets[i]);
       }
     }
-
-  }
-
- 
+  };
 
   const backgroundColorList = ["#1A2232"];
   const [textList, setTextList] = useState([
@@ -104,92 +212,6 @@ const BookTicket = (props) => {
     backgroundColorList[selectedIndex] = "red";
   }
 
-  const [selectedSeats, setselectedSeats] = useState(null);
-  const handleSeats = (i) => {
-    setselectedSeats(i);
-  };
-
-  const backgroundColorSeats = [
-    "#1A2232",
-  ];
-  const [textListSeats, setTextListSeats] = useState([
-    "A1",
-    "A2",
-    "A3",
-    "A4",
-    "A5",
-    "A6",
-    "B1",
-    "B2",
-    "B3",
-    "B4",
-    "B5",
-    "B6",
-    "B7",
-    "B8",
-    "C1",
-    "C2",
-    "C3",
-    "C4",
-    "C5",
-    "C6",
-    "C7",
-    "C8",
-    "D1",
-    "D2",
-    "D3",
-    "D4",
-    "D5",
-    "D6",
-    "D7",
-    "D8",
-    "E1",
-    "E2",
-    "E3",
-    "E4",
-    "E5",
-    "E6",
-    "E7",
-    "E8",
-    "F1",
-    "F2",
-    "F3",
-    "F4",
-    "F5",
-    "F6",
-    "F7",
-    "F8",
-    "G1",
-    "G2",
-    "G3",
-    "G4",
-    "G5",
-    "G6",
-    "G7",
-    "G8",
-    "H1",
-    "H2",
-    "H3",
-    "H4",
-    "H5",
-    "H6",
-    "H7",
-    "H8",
-    "I1",
-    "I2",
-    "I3",
-    "I4",
-    "I5",
-    "I6",
-    'I7',
-    'I8',
-    'I9',
-    'I10',
-  ]);
-
-  if (selectedSeats !== null) {
-    backgroundColorSeats[selectedSeats] = "red";
-  }
   const [bapThuong, setbapThuong] = useState(0);
   const [phoMai, setphoMai] = useState(0);
   const [socola, setsocola] = useState(0);
@@ -263,7 +285,7 @@ const BookTicket = (props) => {
 
           <View style={styles.chooseViewingTime}>
             <Text style={styles.viewingTime}>Viewing Time</Text>
-            <View style={styles.row}>
+            <View style={styles.row1}>
               {[0, 1, 2, 3].map((index) => (
                 <TouchableOpacity
                   key={index}
@@ -278,7 +300,7 @@ const BookTicket = (props) => {
               ))}
             </View>
 
-            <View style={styles.row}>
+            <View style={styles.row1}>
               {[4, 5, 6, 7].map((index) => (
                 <TouchableOpacity
                   key={index}
@@ -293,7 +315,7 @@ const BookTicket = (props) => {
               ))}
             </View>
 
-            <View style={styles.row}>
+            <View style={styles.row1}>
               {[8, 9, 10, 11].map((index) => (
                 <TouchableOpacity
                   key={index}
@@ -307,7 +329,7 @@ const BookTicket = (props) => {
                 </TouchableOpacity>
               ))}
             </View>
-            <View style={styles.row}>
+            <View style={styles.row1}>
               {[12, 13, 14, 15].map((index) => (
                 <TouchableOpacity
                   key={index}
@@ -323,294 +345,322 @@ const BookTicket = (props) => {
             </View>
           </View>
 
-          <View style={styles.seats}>
-            <Text style={styles.textSeats}>Seats</Text>
-            <Text style={styles.textScreen}>Screen</Text>
-            <View style={styles.rowSeats}>
-              <View style={styles.chooseSeats}>
-                {[0, 1, 2].map((i) => (
-                  <TouchableOpacity
-                    key={i}
-                    style={[
-                      styles.btnSeats,
-                      { backgroundColor: backgroundColorSeats[i] },
-                    ]}
-                    onPress={() => handleSeats(i)}
-                  >
-                    <Text style={styles.textSeatsRow}>{textListSeats[i]}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-
-              <View style={styles.chooseSeats}>
-                {[3, 4, 5].map((i) => (
-                  <TouchableOpacity
-                    key={i}
-                    style={[
-                      styles.btnSeats,
-                      { backgroundColor: backgroundColorSeats[i] },
-                    ]}
-                    onPress={() => handleSeats(i)}
-                  >
-                    <Text style={styles.textSeatsRow}>{textListSeats[i]}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
+          <Text style={[styles.viewingTime, { marginLeft: 20 }]}>
+            Viewing Time
+          </Text>
+          <Text style={styles.textScreen}>Screen</Text>
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <View style={styles.row}>
+              {seats.slice(0, 4).map((seat) => (
+                <TouchableOpacity
+                  key={seat.id}
+                  style={[
+                    styles.seat,
+                    seat.status === "selected" && styles.selectedSeat,
+                    seat.status === "booked" && styles.bookedSeat,
+                  ]}
+                  onPress={() => handleSeatPress(seat.id, seat.status)}
+                  disabled={seat.status === "booked"}
+                >
+                  <Text style={styles.seatText}>{seat.id}</Text>
+                </TouchableOpacity>
+              ))}
+              <View style={styles.gap} />
+              {seats.slice(4, 8).map((seat) => (
+                <TouchableOpacity
+                  key={seat.id}
+                  style={[
+                    styles.seat,
+                    seat.status === "selected" && styles.selectedSeat,
+                    seat.status === "booked" && styles.bookedSeat,
+                  ]}
+                  onPress={() => handleSeatPress(seat.id, seat.status)}
+                  disabled={seat.status === "booked"}
+                >
+                  <Text style={styles.seatText}>{seat.id}</Text>
+                </TouchableOpacity>
+              ))}
             </View>
-
-            <View style={styles.rowSeats}>
-              <View style={styles.chooseSeats}>
-                {[6, 7, 8, 9].map((i) => (
-                  <TouchableOpacity
-                    key={i}
-                    style={[
-                      styles.btnSeats,
-                      { backgroundColor: backgroundColorSeats[i] },
-                    ]}
-                    onPress={() => handleSeats(i)}
-                  >
-                    <Text style={styles.textSeatsRow}>{textListSeats[i]}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-
-              <View style={styles.chooseSeats}>
-                {[10, 11, 12, 13].map((i) => (
-                  <TouchableOpacity
-                    key={i}
-                    style={[
-                      styles.btnSeats,
-                      { backgroundColor: backgroundColorSeats[i] },
-                    ]}
-                    onPress={() => handleSeats(i)}
-                  >
-                    <Text style={styles.textSeatsRow}>{textListSeats[i]}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
+            <View style={styles.row}>
+              {seats.slice(8, 12).map((seat) => (
+                <TouchableOpacity
+                  key={seat.id}
+                  style={[
+                    styles.seat,
+                    seat.status === "selected" && styles.selectedSeat,
+                    seat.status === "booked" && styles.bookedSeat,
+                  ]}
+                  onPress={() => handleSeatPress(seat.id, seat.status)}
+                  disabled={seat.status === "booked"}
+                >
+                  <Text style={styles.seatText}>{seat.id}</Text>
+                </TouchableOpacity>
+              ))}
+              <View style={styles.gap} />
+              {seats.slice(12, 16).map((seat) => (
+                <TouchableOpacity
+                  key={seat.id}
+                  style={[
+                    styles.seat,
+                    seat.status === "selected" && styles.selectedSeat,
+                    seat.status === "booked" && styles.bookedSeat,
+                  ]}
+                  onPress={() => handleSeatPress(seat.id, seat.status)}
+                  disabled={seat.status === "booked"}
+                >
+                  <Text style={styles.seatText}>{seat.id}</Text>
+                </TouchableOpacity>
+              ))}
             </View>
-
-            <View style={styles.rowSeats}>
-              <View style={styles.chooseSeats}>
-                {[14, 15, 16, 17].map((i) => (
-                  <TouchableOpacity
-                    key={i}
-                    style={[
-                      styles.btnSeats,
-                      { backgroundColor: backgroundColorSeats[i] },
-                    ]}
-                    onPress={() => handleSeats(i)}
-                  >
-                    <Text style={styles.textSeatsRow}>{textListSeats[i]}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-
-              <View style={styles.chooseSeats}>
-                {[18, 19, 20, 21].map((i) => (
-                  <TouchableOpacity
-                    key={i}
-                    style={[
-                      styles.btnSeats,
-                      { backgroundColor: backgroundColorSeats[i] },
-                    ]}
-                    onPress={() => handleSeats(i)}
-                  >
-                    <Text style={styles.textSeatsRow}>{textListSeats[i]}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
+            <View style={styles.row}>
+              {seats.slice(16, 20).map((seat) => (
+                <TouchableOpacity
+                  key={seat.id}
+                  style={[
+                    styles.seat,
+                    seat.status === "selected" && styles.selectedSeat,
+                    seat.status === "booked" && styles.bookedSeat,
+                  ]}
+                  onPress={() => handleSeatPress(seat.id, seat.status)}
+                  disabled={seat.status === "booked"}
+                >
+                  <Text style={styles.seatText}>{seat.id}</Text>
+                </TouchableOpacity>
+              ))}
+              <View style={styles.gap} />
+              {seats.slice(20, 24).map((seat) => (
+                <TouchableOpacity
+                  key={seat.id}
+                  style={[
+                    styles.seat,
+                    seat.status === "selected" && styles.selectedSeat,
+                    seat.status === "booked" && styles.bookedSeat,
+                  ]}
+                  onPress={() => handleSeatPress(seat.id, seat.status)}
+                  disabled={seat.status === "booked"}
+                >
+                  <Text style={styles.seatText}>{seat.id}</Text>
+                </TouchableOpacity>
+              ))}
             </View>
-
-            <View style={styles.rowSeats}>
-              <View style={styles.chooseSeats}>
-                {[22, 23, 24, 25].map((i) => (
-                  <TouchableOpacity
-                    key={i}
-                    style={[
-                      styles.btnSeats,
-                      { backgroundColor: backgroundColorSeats[i] },
-                    ]}
-                    onPress={() => handleSeats(i)}
-                  >
-                    <Text style={styles.textSeatsRow}>{textListSeats[i]}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-
-              <View style={styles.chooseSeats}>
-                {[26, 27, 28, 29].map((i) => (
-                  <TouchableOpacity
-                    key={i}
-                    style={[
-                      styles.btnSeats,
-                      { backgroundColor: backgroundColorSeats[i] },
-                    ]}
-                    onPress={() => handleSeats(i)}
-                  >
-                    <Text style={styles.textSeatsRow}>{textListSeats[i]}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
+            <View style={styles.row}>
+              {seats.slice(24, 28).map((seat) => (
+                <TouchableOpacity
+                  key={seat.id}
+                  style={[
+                    styles.seat,
+                    seat.status === "selected" && styles.selectedSeat,
+                    seat.status === "booked" && styles.bookedSeat,
+                  ]}
+                  onPress={() => handleSeatPress(seat.id, seat.status)}
+                  disabled={seat.status === "booked"}
+                >
+                  <Text style={styles.seatText}>{seat.id}</Text>
+                </TouchableOpacity>
+              ))}
+              <View style={styles.gap} />
+              {seats.slice(28, 32).map((seat) => (
+                <TouchableOpacity
+                  key={seat.id}
+                  style={[
+                    styles.seat,
+                    seat.status === "selected" && styles.selectedSeat,
+                    seat.status === "booked" && styles.bookedSeat,
+                  ]}
+                  onPress={() => handleSeatPress(seat.id, seat.status)}
+                  disabled={seat.status === "booked"}
+                >
+                  <Text style={styles.seatText}>{seat.id}</Text>
+                </TouchableOpacity>
+              ))}
             </View>
-
-            <View style={styles.rowSeats}>
-              <View style={styles.chooseSeats}>
-                {[30, 31, 32, 33].map((i) => (
-                  <TouchableOpacity
-                    key={i}
-                    style={[
-                      styles.btnSeats,
-                      { backgroundColor: backgroundColorSeats[i] },
-                    ]}
-                    onPress={() => handleSeats(i)}
-                  >
-                    <Text style={styles.textSeatsRow}>{textListSeats[i]}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-
-              <View style={styles.chooseSeats}>
-                {[34, 35, 36, 37].map((i) => (
-                  <TouchableOpacity
-                    key={i}
-                    style={[
-                      styles.btnSeats,
-                      { backgroundColor: backgroundColorSeats[i] },
-                    ]}
-                    onPress={() => handleSeats(i)}
-                  >
-                    <Text style={styles.textSeatsRow}>{textListSeats[i]}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
+            <View style={styles.row}>
+              {seats.slice(32, 36).map((seat) => (
+                <TouchableOpacity
+                  key={seat.id}
+                  style={[
+                    styles.seat,
+                    seat.status === "selected" && styles.selectedSeat,
+                    seat.status === "booked" && styles.bookedSeat,
+                  ]}
+                  onPress={() => handleSeatPress(seat.id, seat.status)}
+                  disabled={seat.status === "booked"}
+                >
+                  <Text style={styles.seatText}>{seat.id}</Text>
+                </TouchableOpacity>
+              ))}
+              <View style={styles.gap} />
+              {seats.slice(36, 40).map((seat) => (
+                <TouchableOpacity
+                  key={seat.id}
+                  style={[
+                    styles.seat,
+                    seat.status === "selected" && styles.selectedSeat,
+                    seat.status === "booked" && styles.bookedSeat,
+                  ]}
+                  onPress={() => handleSeatPress(seat.id, seat.status)}
+                  disabled={seat.status === "booked"}
+                >
+                  <Text style={styles.seatText}>{seat.id}</Text>
+                </TouchableOpacity>
+              ))}
             </View>
-
-            <View style={styles.rowSeats}>
-              <View style={styles.chooseSeats}>
-                {[38, 39, 40, 41].map((i) => (
-                  <TouchableOpacity
-                    key={i}
-                    style={[
-                      styles.btnSeats,
-                      { backgroundColor: backgroundColorSeats[i] },
-                    ]}
-                    onPress={() => handleSeats(i)}
-                  >
-                    <Text style={styles.textSeatsRow}>{textListSeats[i]}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-              <View style={styles.chooseSeats}>
-                {[42, 43, 44, 45].map((i) => (
-                  <TouchableOpacity
-                    key={i}
-                    style={[
-                      styles.btnSeats,
-                      { backgroundColor: backgroundColorSeats[i] },
-                    ]}
-                    onPress={() => handleSeats(i)}
-                  >
-                    <Text style={styles.textSeatsRow}>{textListSeats[i]}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
+            <View style={styles.row}>
+              {seats.slice(40, 44).map((seat) => (
+                <TouchableOpacity
+                  key={seat.id}
+                  style={[
+                    styles.seat,
+                    seat.status === "selected" && styles.selectedSeat,
+                    seat.status === "booked" && styles.bookedSeat,
+                  ]}
+                  onPress={() => handleSeatPress(seat.id, seat.status)}
+                  disabled={seat.status === "booked"}
+                >
+                  <Text style={styles.seatText}>{seat.id}</Text>
+                </TouchableOpacity>
+              ))}
+              <View style={styles.gap} />
+              {seats.slice(44, 48).map((seat) => (
+                <TouchableOpacity
+                  key={seat.id}
+                  style={[
+                    styles.seat,
+                    seat.status === "selected" && styles.selectedSeat,
+                    seat.status === "booked" && styles.bookedSeat,
+                  ]}
+                  onPress={() => handleSeatPress(seat.id, seat.status)}
+                  disabled={seat.status === "booked"}
+                >
+                  <Text style={styles.seatText}>{seat.id}</Text>
+                </TouchableOpacity>
+              ))}
             </View>
-
-            <View style={styles.rowSeats}>
-              <View style={styles.chooseSeats}>
-                {[46, 47, 48, 49].map((i) => (
-                  <TouchableOpacity
-                    key={i}
-                    style={[
-                      styles.btnSeats,
-                      { backgroundColor: backgroundColorSeats[i] },
-                    ]}
-                    onPress={() => handleSeats(i)}
-                  >
-                    <Text style={styles.textSeatsRow}>{textListSeats[i]}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-
-              <View style={styles.chooseSeats}>
-                {[50, 51, 52, 53].map((i) => (
-                  <TouchableOpacity
-                    key={i}
-                    style={[
-                      styles.btnSeats,
-                      { backgroundColor: backgroundColorSeats[i] },
-                    ]}
-                    onPress={() => handleSeats(i)}
-                  >
-                    <Text style={styles.textSeatsRow}>{textListSeats[i]}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
+            <View style={styles.row}>
+              {seats.slice(48, 52).map((seat) => (
+                <TouchableOpacity
+                  key={seat.id}
+                  style={[
+                    styles.seat,
+                    seat.status === "selected" && styles.selectedSeat,
+                    seat.status === "booked" && styles.bookedSeat,
+                  ]}
+                  onPress={() => handleSeatPress(seat.id, seat.status)}
+                  disabled={seat.status === "booked"}
+                >
+                  <Text style={styles.seatText}>{seat.id}</Text>
+                </TouchableOpacity>
+              ))}
+              <View style={styles.gap} />
+              {seats.slice(52, 56).map((seat) => (
+                <TouchableOpacity
+                  key={seat.id}
+                  style={[
+                    styles.seat,
+                    seat.status === "selected" && styles.selectedSeat,
+                    seat.status === "booked" && styles.bookedSeat,
+                  ]}
+                  onPress={() => handleSeatPress(seat.id, seat.status)}
+                  disabled={seat.status === "booked"}
+                >
+                  <Text style={styles.seatText}>{seat.id}</Text>
+                </TouchableOpacity>
+              ))}
             </View>
-
-            <View style={styles.rowSeats}>
-              <View style={styles.chooseSeats}>
-                {[54, 55, 56, 57].map((i) => (
-                  <TouchableOpacity
-                    key={i}
-                    style={[
-                      styles.btnSeats,
-                      { backgroundColor: backgroundColorSeats[i] },
-                    ]}
-                    onPress={() => handleSeats(i)}
-                  >
-                    <Text style={styles.textSeatsRow}>{textListSeats[i]}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-
-              <View style={styles.chooseSeats}>
-                {[58, 59, 60, 61].map((i) => (
-                  <TouchableOpacity
-                    key={i}
-                    style={[
-                      styles.btnSeats,
-                      { backgroundColor: backgroundColorSeats[i] },
-                    ]}
-                    onPress={() => handleSeats(i)}
-                  >
-                    <Text style={styles.textSeatsRow}>{textListSeats[i]}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
+            <View style={styles.row}>
+              {seats.slice(56, 60).map((seat) => (
+                <TouchableOpacity
+                  key={seat.id}
+                  style={[
+                    styles.seat,
+                    seat.status === "selected" && styles.selectedSeat,
+                    seat.status === "booked" && styles.bookedSeat,
+                  ]}
+                  onPress={() => handleSeatPress(seat.id, seat.status)}
+                  disabled={seat.status === "booked"}
+                >
+                  <Text style={styles.seatText}>{seat.id}</Text>
+                </TouchableOpacity>
+              ))}
+              <View style={styles.gap} />
+              {seats.slice(60, 64).map((seat) => (
+                <TouchableOpacity
+                  key={seat.id}
+                  style={[
+                    styles.seat,
+                    seat.status === "selected" && styles.selectedSeat,
+                    seat.status === "booked" && styles.bookedSeat,
+                  ]}
+                  onPress={() => handleSeatPress(seat.id, seat.status)}
+                  disabled={seat.status === "booked"}
+                >
+                  <Text style={styles.seatText}>{seat.id}</Text>
+                </TouchableOpacity>
+              ))}
             </View>
-
-            <View style={styles.rowSeats}>
-              <View style={styles.chooseSeats}>
-                {[62, 63, 64, 65,66].map((i) => (
-                  <TouchableOpacity
-                    key={i}
-                    style={[
-                      styles.btnSeats,
-                      { backgroundColor: backgroundColorSeats[i] },
-                    ]}
-                    onPress={() => handleSeats(i)}
-                  >
-                    <Text style={styles.textSeatsRow}>{textListSeats[i]}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-
-              <View style={styles.chooseSeats}>
-                {[  67, 68, 69,70,71].map((i) => (
-                  <TouchableOpacity
-                    key={i}
-                    style={[
-                      styles.btnSeats,
-                      { backgroundColor: backgroundColorSeats[i] },
-                    ]}
-                    onPress={() => handleSeats(i)}
-                  >
-                    <Text style={styles.textSeatsRow}>{textListSeats[i]}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
+            <View style={styles.row}>
+              {seats.slice(64, 68).map((seat) => (
+                <TouchableOpacity
+                  key={seat.id}
+                  style={[
+                    styles.seat,
+                    seat.status === "selected" && styles.selectedSeat,
+                    seat.status === "booked" && styles.bookedSeat,
+                  ]}
+                  onPress={() => handleSeatPress(seat.id, seat.status)}
+                  disabled={seat.status === "booked"}
+                >
+                  <Text style={styles.seatText}>{seat.id}</Text>
+                </TouchableOpacity>
+              ))}
+              <View style={styles.gap} />
+              {seats.slice(68, 72).map((seat) => (
+                <TouchableOpacity
+                  key={seat.id}
+                  style={[
+                    styles.seat,
+                    seat.status === "selected" && styles.selectedSeat,
+                    seat.status === "booked" && styles.bookedSeat,
+                  ]}
+                  onPress={() => handleSeatPress(seat.id, seat.status)}
+                  disabled={seat.status === "booked"}
+                >
+                  <Text style={styles.seatText}>{seat.id}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+            <View style={styles.row}>
+              {seats.slice(72, 77).map((seat) => (
+                <TouchableOpacity
+                  key={seat.id}
+                  style={[
+                    styles.seat,
+                    seat.status === "selected" && styles.selectedSeat,
+                    seat.status === "booked" && styles.bookedSeat,
+                  ]}
+                  onPress={() => handleSeatPress(seat.id, seat.status)}
+                  disabled={seat.status === "booked"}
+                >
+                  <Text style={styles.seatText}>{seat.id}</Text>
+                </TouchableOpacity>
+              ))}
+              {/* <View style={styles.gap} /> */}
+              {seats.slice(77, 82).map((seat) => (
+                <TouchableOpacity
+                  key={seat.id}
+                  style={[
+                    styles.seat,
+                    seat.status === "selected" && styles.selectedSeat,
+                    seat.status === "booked" && styles.bookedSeat,
+                  ]}
+                  onPress={() => handleSeatPress(seat.id, seat.status)}
+                  disabled={seat.status === "booked"}
+                >
+                  <Text style={styles.seatText}>{seat.id}</Text>
+                </TouchableOpacity>
+              ))}
             </View>
           </View>
 
@@ -631,6 +681,7 @@ const BookTicket = (props) => {
             </View>
           </View>
         </View>
+
         <View>
           <Text style={[styles.textSeats, { margin: 20 }]}>Popcorn</Text>
           {
@@ -732,6 +783,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: "white",
+    marginTop: 10,
   },
 
   btnTime: {
@@ -745,7 +797,7 @@ const styles = StyleSheet.create({
     width: 80,
   },
 
-  row: {
+  row1: {
     justifyContent: "space-between",
     flexDirection: "row",
     marginTop: 5,
@@ -774,7 +826,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "white",
     fontSize: 15,
-    marginTop: 10,
   },
 
   rowSeats: {
@@ -918,30 +969,46 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderColor: "white",
   },
+
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  seat: {
+    width: 25,
+    height: 25,
+    borderWidth: 1,
+    borderColor: "gray",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 5,
+    borderRadius: 5,
+  },
+  seatText: {
+    fontSize: 14,
+    fontWeight: "bold",
+    justifyContent: "center",
+    color: "#1A2232",
+  },
+  gap: {
+    width: 70,
+  },
+  selectedSeat: {
+    backgroundColor: "green",
+  },
+  bookedSeat: {
+    backgroundColor: "red",
+  },
+  confirmButton: {
+    backgroundColor: "blue",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginTop: 20,
+  },
+  confirmButtonText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
 });
-const data = [
-  {
-    _id: 1,
-    name: "Popcorn",
-    price: 5,
-    image: "require('../../images/popcorn.jpg')",
-    content:
-      "Popcorn is a variety of corn kernel which expands and puffs up when heated; the same names are also used to refer to the foodstuff produced by the expansion. A popcorn kernel has a hard, moisture-sealed hull and a dense starchy interior.",
-  },
-  {
-    _id: 2,
-    name: "Popcorn",
-    price: 5,
-    image: "require('../../images/popcorn.jpg')",
-    content:
-      "Popcorn is a variety of corn kernel which expands and puffs up when heated; the same names are also used to refer to the foodstuff produced by the expansion. A popcorn kernel has a hard, moisture-sealed hull and a dense starchy interior.",
-  },
-  {
-    _id: 3,
-    name: "Popcorn",
-    price: 5,
-    image: "require('../../images/popcorn.jpg')",
-    content:
-      "Popcorn is a variety of corn kernel which expands and puffs up when heated; the same names are also used to refer to the foodstuff produced by the expansion. A popcorn kernel has a hard, moisture-sealed hull and a dense starchy interior.",
-  },
-];
