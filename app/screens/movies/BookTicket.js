@@ -36,13 +36,13 @@ const BookTicket = (props) => {
     { id: "A6", status: "available" },
     { id: "A7", status: "available" },
     { id: "B0", status: "available" },
-    { id: "B1", status: "booked" },
+    { id: "B1", status: "availaboe" },
     { id: "B2", status: "available" },
-    { id: "B3", status: "booked" },
+    { id: "B3", status: "availaboe" },
     { id: "B4", status: "available" },
-    { id: "B5", status: "booked" },
+    { id: "B5", status: "availaboe" },
     { id: "B6", status: "available" },
-    { id: "B7", status: "booked" },
+    { id: "B7", status: "availaboe" },
     { id: "C0", status: "available" },
     { id: "C1", status: "available" },
     { id: "C2", status: "available" },
@@ -345,9 +345,7 @@ const BookTicket = (props) => {
             </View>
           </View>
 
-          <Text style={[styles.viewingTime, { marginLeft: 20 }]}>
-            Viewing Time
-          </Text>
+          <Text style={[styles.viewingTime, { marginLeft: 20 }]}>Seats</Text>
           <Text style={styles.textScreen}>Screen</Text>
           <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
@@ -882,14 +880,14 @@ const styles = StyleSheet.create({
   },
 
   btnReserved: {
-    backgroundColor: "white",
+    backgroundColor: "red",
     width: 20,
     height: 20,
     borderRadius: 5,
   },
 
   btnSelected: {
-    backgroundColor: "red",
+    backgroundColor: "yellow",
     width: 20,
     height: 20,
     borderRadius: 5,
@@ -994,7 +992,7 @@ const styles = StyleSheet.create({
     width: 70,
   },
   selectedSeat: {
-    backgroundColor: "green",
+    backgroundColor: "yellow",
   },
   bookedSeat: {
     backgroundColor: "red",
