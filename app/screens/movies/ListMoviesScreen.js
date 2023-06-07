@@ -6,9 +6,9 @@ import {
   Image,
   FlatList,
   TextInput,
+  Pressable
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
-import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import ItemMoreMovies from "./Item/ItemMoreMovies";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import config from "../../config/config";
@@ -19,6 +19,23 @@ const ListMoviesScreen = (props) => {
   const { navigation } = props;
   const { dataMovie } = useContext(CinemaContext);
   const { dataAccount } = useContext(AccountContext);
+  const [movies, setMovies] = useState(dataMovie);
+  const [search, setSearch] = useState('');
+
+  const findMovies = async () => {
+    const fetchData = async () => {
+      let url = `${config.CONSTANTS.IP}api/movie/searchMovieByName?name=${search}`;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const res = await response.json();
+      // console.log(res);
+      return res;
+    };
+    const res = await fetchData();
+    setMovies(res.movie)
+  }
 
   return (
     <View style={styles.container}>
@@ -41,8 +58,8 @@ const ListMoviesScreen = (props) => {
       </View>
 
       <View style={styles.inputSearch}>
-        <TextInput style={styles.is_inputText} placeholder="Tìm phim ..." />
-        <Pressable>
+        <TextInput onChangeText={setSearch} style={styles.is_inputText} placeholder="Tìm phim ..." />
+        <Pressable onPress={findMovies}>
           <Image
             style={styles.is_btnSearch}
             source={require("../../images/search.png")}
@@ -54,7 +71,7 @@ const ListMoviesScreen = (props) => {
       {/* Danh sách phim */}
       <View style={styles.listMovieContainer}>
         <FlatList
-          data={dataMovie}
+          data={movies}
           renderItem={({ item }) => (
             <ItemMoreMovies data={item} navigation={navigation} />
           )}

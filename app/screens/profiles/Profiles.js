@@ -58,7 +58,7 @@ const Profiles = (props) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.headerTitle}>
-          <Image source={require("../../images/back.png")}></Image>
+          <Image></Image>
           <Text style={styles.textHeader}>Profile</Text>
         </View>
       </View>
