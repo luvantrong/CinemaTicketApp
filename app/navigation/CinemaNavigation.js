@@ -10,6 +10,7 @@ import ChangePass from "../screens/profiles/ChangePass";
 import HomeScreen from "../screens/movies/HomeScreen";
 import EventScreen from "../screens/Event/EventScreen";
 import BookTicket from "../screens/movies/BookTicket";
+import Payment from "../screens/movies/Payment";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,7 @@ const HomeStack = () => {
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="EventScreen" component={EventScreen} />
       <Stack.Screen name="BookTicket" component={BookTicket} />
+      <Stack.Screen name="Payment" component={Payment} />
     </Stack.Navigator>
   );
 };

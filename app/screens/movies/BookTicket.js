@@ -19,11 +19,15 @@ import config from "../../config/config";
 import { CinemaContext } from "../../context/CinemaContext";
 
 const BookTicket = (props) => {
+  const { navigation } = props;
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
-  const { navigation } = props;
   const { data } = props?.route?.params;
+
+  const hanldeToPayment = () => {
+    navigation.navigate("Payment");
+  };
 
   console.log(data);
   const { dataPopcorn } = useContext(CinemaContext);
@@ -147,6 +151,10 @@ const BookTicket = (props) => {
     "I4",
     "I5",
     "I6",
+    'I7',
+    'I8',
+    'I9',
+    'I10',
   ]);
 
   if (selectedSeats !== null) {
@@ -160,17 +168,17 @@ const BookTicket = (props) => {
   const [soda, setsoda] = useState(0);
   let a = 0;
 
-  const BuyNow = () => {
-    console.log("-----------------------------------");
-    console.log("Giờ: " + selectedIndex);
-    console.log("Số ghế: " + selectedSeats);
-    console.log("Số lượng bắp thường: " + bapThuong);
-    console.log("Số lượng bắp phô mai: " + phoMai);
-    console.log("Số lượng bắp socola: " + socola);
-    console.log("Số lượng pepsi: " + pepsi);
-    console.log("Số lượng soda: " + soda);
-    console.log("Số lượng coca: " + coca);
-  };
+  // const BuyNow = () => {
+  //   console.log("-----------------------------------");
+  //   console.log("Giờ: " + selectedIndex);
+  //   console.log("Số ghế: " + selectedSeats);
+  //   console.log("Số lượng bắp thường: " + bapThuong);
+  //   console.log("Số lượng bắp phô mai: " + phoMai);
+  //   console.log("Số lượng bắp socola: " + socola);
+  //   console.log("Số lượng pepsi: " + pepsi);
+  //   console.log("Số lượng soda: " + soda);
+  //   console.log("Số lượng coca: " + coca);
+  // };
 
   return (
     <ScrollView>
@@ -545,7 +553,7 @@ const BookTicket = (props) => {
 
             <View style={styles.rowSeats}>
               <View style={styles.chooseSeats}>
-                {[62, 63, 64].map((i) => (
+                {[62, 63, 64, 65,66].map((i) => (
                   <TouchableOpacity
                     key={i}
                     style={[
@@ -560,7 +568,7 @@ const BookTicket = (props) => {
               </View>
 
               <View style={styles.chooseSeats}>
-                {[65, 66, 67].map((i) => (
+                {[  67, 68, 69,70,71].map((i) => (
                   <TouchableOpacity
                     key={i}
                     style={[
@@ -611,7 +619,7 @@ const BookTicket = (props) => {
         </View>
 
         <View style={styles.footer}>
-          <TouchableOpacity onPress={BuyNow} style={styles.btnBuy}>
+          <TouchableOpacity onPress={hanldeToPayment} style={styles.btnBuy}>
             <Text style={styles.textBuy}>Buy Now</Text>
           </TouchableOpacity>
         </View>
@@ -752,7 +760,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#6B6C6E",
     width: 30,
-    marginHorizontal: 3,
+    marginHorizontal: 2,
   },
 
   textSeatsRow: {
