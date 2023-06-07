@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   Button,
+  FlatList
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-native-date-picker";
@@ -12,11 +13,14 @@ import moment from "moment/moment";
 import { ScrollView } from "react-native-gesture-handler";
 import InputSpinner from "react-native-input-spinner";
 import NumericInput from "react-native-numeric-input";
+import ItemPopcorn from "./Item/ItemPopcorn";
 
-const BookTicket = () => {
+const BookTicket = (props) => {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
+  const { navigation } = props;
+
 
   useEffect(() => {
     setText(moment(date).format("DD/MM/YYYY"));
@@ -564,183 +568,23 @@ const BookTicket = () => {
             </View>
           </View>
 
-          <View style={styles.foodAndWater}>
-            <Text style={styles.textTitleFoodAndWater}>Food And Water</Text>
-            <View style={styles.barFoodAndWater}></View>
-            <View style={styles.food}>
-              <Text style={styles.textFood}>Food</Text>
-              <View style={styles.orderFood}>
-                <View style={styles.normal}>
-                  <Image
-                    style={styles.imgFoodAndWater}
-                    source={require("../../images/thuong.png")}
-                  ></Image>
-                  <Text style={styles.textFoodAndWater}>
-                    Bổng ngô {"\n"}vị thường
-                  </Text>
-                  <NumericInput
-                    value={bapThuong}
-                    onChange={(value) => {
-                      // setNumeric({value});
-                      setbapThuong(value);
-                    }}
-                    //   onLimitReached={(isMax, msg) => console.log(isMax, msg)}
-                    totalWidth={90}
-                    totalHeight={30}
-                    iconSize={25}
-                    step={1}
-                    valueType="real"
-                    rounded
-                    textColor="orange"
-                    rightButtonBackgroundColor="orange"
-                    leftButtonBackgroundColor="orange"
-                    minValue={0}
-                  />
-                </View>
 
-                <View style={styles.phomai}>
-                  <Image
-                    style={styles.imgFoodAndWater}
-                    source={require("../../images/phomai.png")}
-                  ></Image>
-                  <Text style={styles.textFoodAndWater}>
-                    Bổng ngô {"\n"}vị phô mai
-                  </Text>
-                  <NumericInput
-                    value={phoMai}
-                    onChange={(value) => {
-                      // setNumeric({value});
-                      setphoMai(value);
-                    }}
-                    //   onLimitReached={(isMax, msg) => console.log(isMax, msg)}
-                    totalWidth={90}
-                    totalHeight={30}
-                    iconSize={25}
-                    step={1}
-                    valueType="real"
-                    rounded
-                    textColor="white"
-                    borderColor={"orange"}
-                    rightButtonBackgroundColor="orange"
-                    leftButtonBackgroundColor="orange"
-                    minValue={0}
-                  />
-                </View>
+        </View>
+        <View>
+          <Text style={[styles.textSeats, { margin: 20 }]}>Popcorn</Text>
+            {/* <FlatList
+                            data={data}
+                            horizontal
+                            renderItem={({ item }) => <ItemPopcorn data={item} navigation={navigation} />}
+                            keyExtractor={item => item._id}
+                            showsVerticalScrollIndicator={false}
+                        />  */
+                        
+                        data.map((item) => <ItemPopcorn key={item._id} data={item} navigation={navigation} />)
+                      }
+                        
+    
 
-                <View style={styles.socola}>
-                  <Image
-                    style={styles.imgFoodAndWater}
-                    source={require("../../images/socola.png")}
-                  ></Image>
-                  <Text style={styles.textFoodAndWater}>
-                    Bổng ngô {"\n"}vị socola
-                  </Text>
-                  <NumericInput
-                    value={socola}
-                    onChange={(value) => {
-                      // setNumeric({value});
-                      setsocola(value);
-                    }}
-                    //   onLimitReached={(isMax, msg) => console.log(isMax, msg)}
-                    totalWidth={90}
-                    totalHeight={30}
-                    iconSize={25}
-                    step={1}
-                    valueType="real"
-                    rounded
-                    textColor="orange"
-                    rightButtonBackgroundColor="orange"
-                    leftButtonBackgroundColor="orange"
-                    minValue={0}
-                  />
-                </View>
-              </View>
-            </View>
-
-            <View style={styles.water}>
-              <Text style={styles.textFood}>Water</Text>
-              <View style={styles.orderFood}>
-                <View style={styles.normal}>
-                  <Image
-                    style={styles.imgFoodAndWater}
-                    source={require("../../images/pepsi.png")}
-                  ></Image>
-                  <Text style={styles.textFoodAndWater}>Pepsi</Text>
-                  <NumericInput
-                    value={pepsi}
-                    onChange={(value) => {
-                      // setNumeric({value});
-                      setpepsi(value);
-                    }}
-                    //   onLimitReached={(isMax, msg) => console.log(isMax, msg)}
-                    totalWidth={90}
-                    totalHeight={30}
-                    iconSize={25}
-                    step={1}
-                    valueType="real"
-                    rounded
-                    textColor="orange"
-                    rightButtonBackgroundColor="orange"
-                    leftButtonBackgroundColor="orange"
-                    minValue={0}
-                  />
-                </View>
-
-                <View style={styles.phomai}>
-                  <Image
-                    style={styles.imgFoodAndWater}
-                    source={require("../../images/coca.png")}
-                  ></Image>
-                  <Text style={styles.textFoodAndWater}>Coca cola</Text>
-                  <NumericInput
-                    value={coca}
-                    onChange={(value) => {
-                      // setNumeric({value});
-                      setcoca(value);
-                    }}
-                    //   onLimitReached={(isMax, msg) => console.log(isMax, msg)}
-                    totalWidth={90}
-                    totalHeight={30}
-                    iconSize={25}
-                    step={1}
-                    valueType="real"
-                    rounded
-                    textColor="white"
-                    borderColor={"orange"}
-                    rightButtonBackgroundColor="orange"
-                    leftButtonBackgroundColor="orange"
-                    minValue={0}
-                  />
-                </View>
-
-                <View style={styles.socola}>
-                  <Image
-                    style={styles.imgFoodAndWater}
-                    source={require("../../images/soda.png")}
-                  ></Image>
-                  <Text style={styles.textFoodAndWater}>Soda</Text>
-                  <NumericInput
-                    value={soda}
-                    onChange={(value) => {
-                      // setNumeric({value});
-                      setsoda(value);
-                    }}
-                    //   onLimitReached={(isMax, msg) => console.log(isMax, msg)}
-                    totalWidth={90}
-                    totalHeight={30}
-                    iconSize={25}
-                    step={1}
-                    valueType="real"
-                    rounded
-                    textColor="orange"
-                    rightButtonBackgroundColor="orange"
-                    leftButtonBackgroundColor="orange"
-                    minValue={0}
-                  />
-                </View>
-              </View>
-            </View>
-          </View>
         </View>
 
         <View style={styles.footer}>
@@ -1014,3 +858,32 @@ const styles = StyleSheet.create({
     borderColor: "white",
   },
 });
+const data = [
+  {
+    _id: 1,
+    name: 'Popcorn',
+    price: 5,
+    image: "require('../../images/popcorn.jpg')",
+    content: 'Popcorn is a variety of corn kernel which expands and puffs up when heated; the same names are also used to refer to the foodstuff produced by the expansion. A popcorn kernel has a hard, moisture-sealed hull and a dense starchy interior.',
+
+
+  },
+  {
+    _id: 2,
+    name: 'Popcorn',
+    price: 5,
+    image: "require('../../images/popcorn.jpg')",
+    content: 'Popcorn is a variety of corn kernel which expands and puffs up when heated; the same names are also used to refer to the foodstuff produced by the expansion. A popcorn kernel has a hard, moisture-sealed hull and a dense starchy interior.',
+
+
+  },
+  {
+    _id: 3,
+    name: 'Popcorn',
+    price: 5,
+    image: "require('../../images/popcorn.jpg')",
+    content: 'Popcorn is a variety of corn kernel which expands and puffs up when heated; the same names are also used to refer to the foodstuff produced by the expansion. A popcorn kernel has a hard, moisture-sealed hull and a dense starchy interior.',
+
+
+  }
+]
