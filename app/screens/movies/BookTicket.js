@@ -24,13 +24,14 @@ const BookTicket = (props) => {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
   const { data } = props?.route?.params;
-
+  const nameMovie = data.tenPhim;
   const hanldeToPayment = () => {
     navigation.navigate("Payment");
   };
 
-  console.log(data);
   const { dataPopcorn } = useContext(CinemaContext);
+ 
+
   console.log(dataPopcorn);
 
   useEffect(() => {
@@ -38,14 +39,45 @@ const BookTicket = (props) => {
   }, [date]);
 
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const handlePress = (index) => {
-    setSelectedIndex(index);
-  };
+ 
 
-  const backgroundColorList = ["#1A2232", "#1A2232", "#1A2232", "#1A2232"];
+  const [dataTicketDateAndNameMovie, setDataTicketDateAndNameMovie] = useState("")
+  const getTicketByDateandNameMovie = async (date, nameMovie) => {
+    let data = { date, nameMovie };
+    const fetchData = async (data) => {
+      let url = `${config.CONSTANTS.IP}api/ticket/getTicketByNameAndNameMovie`;
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const res = await response.json();
+      return res;
+    };
+    const res = await fetchData(data);
+      setDataTicketDateAndNameMovie(res.Ticket);
+      console.log(dataTicketDateAndNameMovie)
+  }
+  let tickets = [1,2,3];
+  const getDataTicketByTime = (time)=>{
+    // const tickets = dataTicketDateAndNameMovie.filter(ticket => ticket.suatXem !== time);
+    console.log(tickets);
+    tickets.splice(0, tickets.length);
+    const newTickets = [...dataTicketDateAndNameMovie];
+    for (let i = 0; i < newTickets.length; i++) {
+      if (newTickets[i].suatXem === time) {
+          tickets.push(newTickets[i]);
+      }
+    }
+
+  }
+
+ 
+
+  const backgroundColorList = ["#1A2232"];
   const [textList, setTextList] = useState([
-    "8:00",
-    "9:00",
+    "08:00",
+    "09:00",
     "10:00",
     "11:00",
     "12:00",
@@ -62,6 +94,12 @@ const BookTicket = (props) => {
     "23:00",
   ]);
 
+  const handlePress = (index) => {
+    setSelectedIndex(index);
+    const time = textList[index];
+    getDataTicketByTime(time);
+  };
+
   if (selectedIndex !== null) {
     backgroundColorList[selectedIndex] = "red";
   }
@@ -72,14 +110,6 @@ const BookTicket = (props) => {
   };
 
   const backgroundColorSeats = [
-    "#1A2232",
-    "#1A2232",
-    "#1A2232",
-    "#1A2232",
-    "#1A2232",
-    "#1A2232",
-    "#1A2232",
-    "#1A2232",
     "#1A2232",
   ];
   const [textListSeats, setTextListSeats] = useState([
@@ -219,7 +249,7 @@ const BookTicket = (props) => {
                   onConfirm={(date) => {
                     setOpen(false);
                     setDate(date);
-                    console.log(date);
+                    getTicketByDateandNameMovie(date, nameMovie);
                   }}
                   onCancel={() => {
                     setOpen(false);
