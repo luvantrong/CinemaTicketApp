@@ -2,12 +2,12 @@ import React from "react";
 import AppNavigation from "./app/navigation/AppNavigation";
 import { AccountConTextProvider } from "./app/context/AccountContext";
 import { CinemaConTextProvider } from "./app/context/CinemaContext";
-import BookTicket from "./app/screens/movies/BookTicket";
-import ItemPopcorn from "./app/screens/movies/Item/ItemPopcorn";
+
+import Payment from "./app/screens/movies/Payment";
 
 const App = () => {
   return (
-  <BookTicket/>
+    <Payment />
   );
 };
 
