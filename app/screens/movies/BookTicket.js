@@ -5,7 +5,7 @@ import {
   Image,
   TouchableOpacity,
   Button,
-  FlatList
+  FlatList,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-native-date-picker";
@@ -20,7 +20,6 @@ const BookTicket = (props) => {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
   const { navigation } = props;
-
 
   useEffect(() => {
     setText(moment(date).format("DD/MM/YYYY"));
@@ -567,24 +566,22 @@ const BookTicket = (props) => {
               <Text style={styles.textStatus}>Selected</Text>
             </View>
           </View>
-
-
         </View>
         <View>
           <Text style={[styles.textSeats, { margin: 20 }]}>Popcorn</Text>
-            {/* <FlatList
+          {
+            /* <FlatList
                             data={data}
                             horizontal
                             renderItem={({ item }) => <ItemPopcorn data={item} navigation={navigation} />}
                             keyExtractor={item => item._id}
                             showsVerticalScrollIndicator={false}
                         />  */
-                        
-                        data.map((item) => <ItemPopcorn key={item._id} data={item} navigation={navigation} />)
-                      }
-                        
-    
 
+            data.map((item) => (
+              <ItemPopcorn key={item._id} data={item} navigation={navigation} />
+            ))
+          }
         </View>
 
         <View style={styles.footer}>
@@ -861,29 +858,26 @@ const styles = StyleSheet.create({
 const data = [
   {
     _id: 1,
-    name: 'Popcorn',
+    name: "Popcorn",
     price: 5,
     image: "require('../../images/popcorn.jpg')",
-    content: 'Popcorn is a variety of corn kernel which expands and puffs up when heated; the same names are also used to refer to the foodstuff produced by the expansion. A popcorn kernel has a hard, moisture-sealed hull and a dense starchy interior.',
-
-
+    content:
+      "Popcorn is a variety of corn kernel which expands and puffs up when heated; the same names are also used to refer to the foodstuff produced by the expansion. A popcorn kernel has a hard, moisture-sealed hull and a dense starchy interior.",
   },
   {
     _id: 2,
-    name: 'Popcorn',
+    name: "Popcorn",
     price: 5,
     image: "require('../../images/popcorn.jpg')",
-    content: 'Popcorn is a variety of corn kernel which expands and puffs up when heated; the same names are also used to refer to the foodstuff produced by the expansion. A popcorn kernel has a hard, moisture-sealed hull and a dense starchy interior.',
-
-
+    content:
+      "Popcorn is a variety of corn kernel which expands and puffs up when heated; the same names are also used to refer to the foodstuff produced by the expansion. A popcorn kernel has a hard, moisture-sealed hull and a dense starchy interior.",
   },
   {
     _id: 3,
-    name: 'Popcorn',
+    name: "Popcorn",
     price: 5,
     image: "require('../../images/popcorn.jpg')",
-    content: 'Popcorn is a variety of corn kernel which expands and puffs up when heated; the same names are also used to refer to the foodstuff produced by the expansion. A popcorn kernel has a hard, moisture-sealed hull and a dense starchy interior.',
-
-
-  }
-]
+    content:
+      "Popcorn is a variety of corn kernel which expands and puffs up when heated; the same names are also used to refer to the foodstuff produced by the expansion. A popcorn kernel has a hard, moisture-sealed hull and a dense starchy interior.",
+  },
+];

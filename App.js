@@ -7,7 +7,11 @@ import ItemPopcorn from "./app/screens/movies/Item/ItemPopcorn";
 
 const App = () => {
   return (
-  <BookTicket/>
+    <AccountConTextProvider>
+      <CinemaConTextProvider>
+        <AppNavigation />
+      </CinemaConTextProvider>
+    </AccountConTextProvider>
   );
 };
 
