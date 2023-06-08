@@ -6,7 +6,9 @@ import {
   ScrollView,
   Pressable,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import config from "../../config/config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Payment = (props) => {
   const { soGhe, movie, soLuongPopcorn, idPopcorn, selectedIndex, date } =
@@ -19,25 +21,54 @@ const Payment = (props) => {
   console.log("Suất xem", selectedIndex);
   console.log("Ngày xem", date);
 
+  const [dataPopcorn, setDataPopcorn] = useState("");
+
+  useEffect(() => {
+    const getPopcornById = async () => {
+      const id = idPopcorn;
+
+      let data = { id };
+      console.log(data);
+      let token = await AsyncStorage.getItem("token");
+      const fetchData = async () => {
+        let url = `${config.CONSTANTS.IP}api/popcorn/get-by-id`;
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        const res = await response.json();
+        return res;
+      };
+      const res = await fetchData();
+      setDataPopcorn(res.popcorn);
+    };
+    getPopcornById();
+    return () => {};
+  }, []);
+  const sumPay =
+    Number(movie.giaVe) + Number(dataPopcorn.price) * Number(soLuongPopcorn);
+
+  const sumPopcorn = Number(dataPopcorn.price) * Number(soLuongPopcorn);
   return (
     <ScrollView style={styles.Container}>
       <View style={{ padding: 10 }}>
         <View style={styles.Headers}>
-          <Image
-            source={require("../../images/poster1.jpg")}
-            style={styles.imgFilm}
-          />
+          <Image source={{ uri: movie.anhBia }} style={styles.imgFilm} />
           <View>
-            <Text style={styles.textFilm}>SPIDERMAN</Text>
-            <Text style={styles.textHeader}>Thứ 4, 7 Thg 6, 2023</Text>
-            <Text style={styles.textHeader}>15:30 - 18:16</Text>
-            <Text style={styles.textHeader}>Seat: F8</Text>
+            <Text style={styles.textFilm}>{movie.tenPhim}</Text>
+            <Text style={styles.textHeader}>Ngày xem: {date}</Text>
+            <Text style={styles.textHeader}>Suất xem: {selectedIndex}h</Text>
+            <Text style={styles.textHeader}>Seat: {soGhe}</Text>
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.textHeader}>MY COMBO</Text>
-              <Text style={styles.textHeader}> x1</Text>
+              <Text style={styles.textHeader}>{dataPopcorn.name}</Text>
+              <Text style={styles.textHeader}> x{soLuongPopcorn}</Text>
             </View>
             <Text style={styles.textPriceHeader}>
-              Tổng thanh toán: 100.000 VND
+              Tổng thanh toán: {sumPay} VND
             </Text>
           </View>
         </View>
@@ -50,22 +81,22 @@ const Payment = (props) => {
           </View>
           <View style={styles.view}>
             <Text style={styles.text}>Tổng</Text>
-            <Text style={styles.text}>100.000 VND</Text>
+            <Text style={styles.text}>{movie.giaVe}</Text>
           </View>
           <Text style={styles.textTitle}>BẮP NƯỚC (TÙY CHỌN)</Text>
           <View style={styles.view}>
             <View style={{ flexDirection: "row" }}>
               <Image
-                source={require("../../images/popcorn.jpg")}
+                source={{ uri: dataPopcorn.image }}
                 style={{ width: 30, height: 30, marginRight: 5 }}
               />
-              <Text style={styles.text}>MY COMBO</Text>
+              <Text style={styles.text}>{dataPopcorn.name}</Text>
             </View>
-            <Text style={styles.text}>1</Text>
+            <Text style={styles.text}>{soLuongPopcorn}</Text>
           </View>
           <View style={styles.view}>
             <Text style={styles.text}>Tổng</Text>
-            <Text style={styles.text}>100.000 VND</Text>
+            <Text style={styles.text}>{sumPopcorn}</Text>
           </View>
 
           <Text style={styles.textTitle}>THANH TOÁN</Text>
