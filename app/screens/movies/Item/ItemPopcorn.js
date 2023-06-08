@@ -5,15 +5,19 @@ import {
   Image,
   Dimensions,
   Pressable,
+  TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import NumericInput from "react-native-numeric-input";
+import { CinemaContext } from "../../../context/CinemaContext";
 
 const ItemPopcorn = (props) => {
   const { data, navigation } = props;
-  const [popcorn, setpopcorn] = React.useState(0);
+  const { setSoLuongPopcorn, setIdPopcorn } = useContext(CinemaContext);
+  const [popcorn, setPopcorn] = React.useState(0);
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container}>
       <Image source={{ uri: data.image }} style={styles.Image} />
       <View>
         <Text style={styles.TextTitle} numberOfLines={1}>
@@ -28,7 +32,8 @@ const ItemPopcorn = (props) => {
             value={popcorn}
             onChange={(value) => {
               // setNumeric({value});
-              setpopcorn(value);
+              setSoLuongPopcorn(value);
+              setIdPopcorn(data._id);
             }}
             //   onLimitReached={(isMax, msg) => console.log(isMax, msg)}
             totalWidth={90}
@@ -44,7 +49,7 @@ const ItemPopcorn = (props) => {
           />
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

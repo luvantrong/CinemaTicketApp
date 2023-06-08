@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   Button,
   FlatList,
+  Pressable,
+  ToastAndroid,
 } from "react-native";
 import React, { useEffect, useState, useContext } from "react";
 import DatePicker from "react-native-date-picker";
@@ -24,7 +26,7 @@ const BookTicket = (props) => {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
   const { data } = props?.route?.params;
-
+  const [suatXem, setSuatXem] = useState("");
   const [selectedSeat, setSelectedSeat] = useState(null);
   const [seats, setSeats] = useState([
     { id: "A0", status: "available" },
@@ -36,13 +38,13 @@ const BookTicket = (props) => {
     { id: "A6", status: "available" },
     { id: "A7", status: "available" },
     { id: "B0", status: "available" },
-    { id: "B1", status: "availaboe" },
+    { id: "B1", status: "available" },
     { id: "B2", status: "available" },
-    { id: "B3", status: "availaboe" },
+    { id: "B3", status: "available" },
     { id: "B4", status: "available" },
-    { id: "B5", status: "availaboe" },
+    { id: "B5", status: "available" },
     { id: "B6", status: "available" },
-    { id: "B7", status: "availaboe" },
+    { id: "B7", status: "available" },
     { id: "C0", status: "available" },
     { id: "C1", status: "available" },
     { id: "C2", status: "available" },
@@ -111,6 +113,90 @@ const BookTicket = (props) => {
     { id: "L9", status: "available" },
   ]);
 
+  const [seats1, setSeats1] = useState([
+    { id: "A0", status: "available" },
+    { id: "A1", status: "available" },
+    { id: "A2", status: "available" },
+    { id: "A3", status: "available" },
+    { id: "A4", status: "available" },
+    { id: "A5", status: "available" },
+    { id: "A6", status: "available" },
+    { id: "A7", status: "available" },
+    { id: "B0", status: "available" },
+    { id: "B1", status: "available" },
+    { id: "B2", status: "available" },
+    { id: "B3", status: "available" },
+    { id: "B4", status: "available" },
+    { id: "B5", status: "available" },
+    { id: "B6", status: "available" },
+    { id: "B7", status: "available" },
+    { id: "C0", status: "available" },
+    { id: "C1", status: "available" },
+    { id: "C2", status: "available" },
+    { id: "C3", status: "available" },
+    { id: "C4", status: "available" },
+    { id: "C5", status: "available" },
+    { id: "C6", status: "available" },
+    { id: "C7", status: "available" },
+    { id: "D0", status: "available" },
+    { id: "D1", status: "available" },
+    { id: "D2", status: "available" },
+    { id: "D3", status: "available" },
+    { id: "D4", status: "available" },
+    { id: "D5", status: "available" },
+    { id: "D6", status: "available" },
+    { id: "D7", status: "available" },
+    { id: "E0", status: "available" },
+    { id: "E1", status: "available" },
+    { id: "E2", status: "available" },
+    { id: "E3", status: "available" },
+    { id: "E4", status: "available" },
+    { id: "E5", status: "available" },
+    { id: "E6", status: "available" },
+    { id: "E7", status: "available" },
+    { id: "F0", status: "available" },
+    { id: "F1", status: "available" },
+    { id: "F2", status: "available" },
+    { id: "F3", status: "available" },
+    { id: "F4", status: "available" },
+    { id: "F5", status: "available" },
+    { id: "F6", status: "available" },
+    { id: "F7", status: "available" },
+    { id: "G0", status: "available" },
+    { id: "G1", status: "available" },
+    { id: "G2", status: "available" },
+    { id: "G3", status: "available" },
+    { id: "G4", status: "available" },
+    { id: "G5", status: "available" },
+    { id: "G6", status: "available" },
+    { id: "G7", status: "available" },
+    { id: "H0", status: "available" },
+    { id: "H1", status: "available" },
+    { id: "H2", status: "available" },
+    { id: "H3", status: "available" },
+    { id: "H4", status: "available" },
+    { id: "H5", status: "available" },
+    { id: "H6", status: "available" },
+    { id: "H7", status: "available" },
+    { id: "K0", status: "available" },
+    { id: "K1", status: "available" },
+    { id: "K2", status: "available" },
+    { id: "K3", status: "available" },
+    { id: "K4", status: "available" },
+    { id: "K5", status: "available" },
+    { id: "K6", status: "available" },
+    { id: "K7", status: "available" },
+    { id: "L0", status: "available" },
+    { id: "L1", status: "available" },
+    { id: "L2", status: "available" },
+    { id: "L3", status: "available" },
+    { id: "L4", status: "available" },
+    { id: "L5", status: "available" },
+    { id: "L6", status: "available" },
+    { id: "L7", status: "available" },
+    { id: "L8", status: "available" },
+    { id: "L9", status: "available" },
+  ]);
   const handleSeatPress = (seatId, seatStatus) => {
     if (seatStatus === "available") {
       const newSeats = seats.map((seat) => {
@@ -120,7 +206,6 @@ const BookTicket = (props) => {
           return seat;
         }
       });
-
       setSeats(newSeats);
       setSelectedSeat(seatId);
     } else if (seatStatus === "selected") {
@@ -131,19 +216,23 @@ const BookTicket = (props) => {
           return seat;
         }
       });
-
       setSeats(newSeats);
-      setSelectedSeat(seatId);
+      setSelectedSeat("");
     }
   };
   const nameMovie = data.tenPhim;
   const hanldeToPayment = () => {
-    navigation.navigate("Payment");
+    navigation.navigate("Payment", {
+      soGhe: selectedSeat,
+      movie: data,
+      soLuongPopcorn: soLuongPopcorn,
+      idPopcorn: idPopcorn,
+      date: text,
+      selectedIndex: suatXem,
+    }); //
   };
 
-  const { dataPopcorn } = useContext(CinemaContext);
-
-  console.log(dataPopcorn);
+  const { dataPopcorn, soLuongPopcorn, idPopcorn } = useContext(CinemaContext);
 
   useEffect(() => {
     setText(moment(date).format("DD/MM/YYYY"));
@@ -169,10 +258,10 @@ const BookTicket = (props) => {
     setDataTicketDateAndNameMovie(res.Ticket);
     console.log(dataTicketDateAndNameMovie);
   };
-  let tickets = [1, 2, 3];
+  let tickets = [];
+
   const getDataTicketByTime = (time) => {
-    // const tickets = dataTicketDateAndNameMovie.filter(ticket => ticket.suatXem !== time);
-    console.log(tickets);
+    tickets.push(0);
     tickets.splice(0, tickets.length);
     const newTickets = [...dataTicketDateAndNameMovie];
     for (let i = 0; i < newTickets.length; i++) {
@@ -202,15 +291,39 @@ const BookTicket = (props) => {
     "23:00",
   ]);
 
-  const handlePress = (index) => {
-    setSelectedIndex(index);
-    const time = textList[index];
-    getDataTicketByTime(time);
-  };
-
   if (selectedIndex !== null) {
     backgroundColorList[selectedIndex] = "red";
   }
+
+  const updateTimeStatus = (soGhes) => {
+    const updateTimes = seats.map((seat) => {
+      if (soGhes.includes(seat.id)) {
+        return { ...seat, status: "booked" };
+      }
+      return seat;
+    });
+    setSeats(updateTimes);
+  };
+
+  const resetSeats = () => {
+    const updateSeats = seats.map((seat) => {
+      return { ...seat, status: "available" };
+    });
+    setSeats(updateSeats);
+  };
+
+  let soGhes = [];
+
+  const handlePress = (index) => {
+    setSelectedIndex(index);
+    setSuatXem(textList[index]);
+    getDataTicketByTime(textList[index]);
+    resetSeats();
+    for (let index = 0; index < tickets.length; index++) {
+      soGhes.push(tickets[index].soGhe);
+    }
+    updateTimeStatus(soGhes);
+  };
 
   const [bapThuong, setbapThuong] = useState(0);
   const [phoMai, setphoMai] = useState(0);
@@ -287,66 +400,76 @@ const BookTicket = (props) => {
             <Text style={styles.viewingTime}>Viewing Time</Text>
             <View style={styles.row1}>
               {[0, 1, 2, 3].map((index) => (
-                <TouchableOpacity
+                <Pressable
                   key={index}
                   style={[
                     styles.btnTime,
                     { backgroundColor: backgroundColorList[index] },
                   ]}
-                  onPress={() => handlePress(index)}
+                  onPress={() => {
+                    handlePress(index);
+                  }}
                 >
                   <Text style={styles.time}>{textList[index]}</Text>
-                </TouchableOpacity>
+                </Pressable>
               ))}
             </View>
 
             <View style={styles.row1}>
               {[4, 5, 6, 7].map((index) => (
-                <TouchableOpacity
+                <Pressable
                   key={index}
                   style={[
                     styles.btnTime,
                     { backgroundColor: backgroundColorList[index] },
                   ]}
-                  onPress={() => handlePress(index)}
+                  onPress={() => {
+                    handlePress(index);
+                  }}
                 >
                   <Text style={styles.time}>{textList[index]}</Text>
-                </TouchableOpacity>
+                </Pressable>
               ))}
             </View>
 
             <View style={styles.row1}>
               {[8, 9, 10, 11].map((index) => (
-                <TouchableOpacity
+                <Pressable
                   key={index}
                   style={[
                     styles.btnTime,
                     { backgroundColor: backgroundColorList[index] },
                   ]}
-                  onPress={() => handlePress(index)}
+                  onPress={() => {
+                    handlePress(index);
+                  }}
                 >
                   <Text style={styles.time}>{textList[index]}</Text>
-                </TouchableOpacity>
+                </Pressable>
               ))}
             </View>
             <View style={styles.row1}>
               {[12, 13, 14, 15].map((index) => (
-                <TouchableOpacity
+                <Pressable
                   key={index}
                   style={[
                     styles.btnTime,
                     { backgroundColor: backgroundColorList[index] },
                   ]}
-                  onPress={() => handlePress(index)}
+                  onPress={() => {
+                    handlePress(index);
+                  }}
                 >
                   <Text style={styles.time}>{textList[index]}</Text>
-                </TouchableOpacity>
+                </Pressable>
               ))}
             </View>
           </View>
 
           <Text style={[styles.viewingTime, { marginLeft: 20 }]}>Seats</Text>
-          <Text style={styles.textScreen}>Screen</Text>
+          <Pressable onPress={resetSeats}>
+            <Text style={styles.textScreen}>Screen</Text>
+          </Pressable>
           <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
