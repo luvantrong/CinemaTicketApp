@@ -11,6 +11,7 @@ import HomeScreen from "../screens/movies/HomeScreen";
 import EventScreen from "../screens/Event/EventScreen";
 import BookTicket from "../screens/movies/BookTicket";
 import Payment from "../screens/movies/Payment";
+import TicketHistory from "../screens/profiles/TicketHistory";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,7 @@ const ProfileStack = () => {
       <Stack.Screen name="Profiles" component={Profiles} />
       <Stack.Screen name="ChangePass" component={ChangePass} />
       <Stack.Screen name="EditProfile" component={EditProfile} />
+      <Stack.Screen name="TicketHistory" component={TicketHistory}/>
     </Stack.Navigator>
   );
 };
