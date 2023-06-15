@@ -5,6 +5,7 @@ import { CinemaConTextProvider } from "./app/context/CinemaContext";
 import BookTicket from "./app/screens/movies/BookTicket";
 import ItemPopcorn from "./app/screens/movies/Item/ItemPopcorn";
 import SeatMap from "./app/screens/movies/SeatMap";
+import ItemTicket from "./app/screens/movies/Item/ItemTicket";
 
 const App = () => {
   return (
@@ -13,7 +14,7 @@ const App = () => {
         <AppNavigation />
       </CinemaConTextProvider>
     </AccountConTextProvider>
-    // <SeatMap/>
+    // <ItemTicket />
   );
 };
 

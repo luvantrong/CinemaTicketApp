@@ -5,10 +5,12 @@ import {
   Image,
   ScrollView,
   Pressable,
+  ToastAndroid,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import config from "../../config/config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AccountContext } from "../../context/AccountContext";
 
 const Payment = (props) => {
   const { soGhe, movie, soLuongPopcorn, idPopcorn, selectedIndex, date } =
@@ -20,7 +22,7 @@ const Payment = (props) => {
   console.log("Id bắp", idPopcorn);
   console.log("Suất xem", selectedIndex);
   console.log("Ngày xem", date);
-
+  const { dataAccount } = useContext(AccountContext);
   const [dataPopcorn, setDataPopcorn] = useState("");
 
   useEffect(() => {
@@ -53,6 +55,57 @@ const Payment = (props) => {
     Number(movie.giaVe) + Number(dataPopcorn.price) * Number(soLuongPopcorn);
 
   const sumPopcorn = Number(dataPopcorn.price) * Number(soLuongPopcorn);
+  const handlePayment = async () => {
+    const tenPhim = movie.tenPhim;
+    const giaVe = movie.giaVe;
+    const ngayXem = date;
+    const suatXem = selectedIndex;
+    const bapRang = dataPopcorn.name;
+    const soLuong = soLuongPopcorn;
+    const nguoiDung = dataAccount.email;
+    const image = dataPopcorn.image;
+    console.log(
+      tenPhim,
+      giaVe,
+      soGhe,
+      ngayXem,
+      suatXem,
+      bapRang,
+      soLuong,
+      nguoiDung,
+      image
+    );
+    let data = {
+      tenPhim,
+      giaVe,
+      soGhe,
+      ngayXem,
+      suatXem,
+      bapRang,
+      soLuong,
+      nguoiDung,
+      image,
+    };
+    const fetchData = async (data) => {
+      let url = `${config.CONSTANTS.IP}api/ticket/addNewTicket`;
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const res = await response.json();
+      return res;
+    };
+    const res = await fetchData(data);
+    console.log(res);
+    if (res.result) {
+      ToastAndroid.show("Mua vé thành công", ToastAndroid.SHORT);
+    } else {
+      const mes = res.message;
+      ToastAndroid.show(mes, ToastAndroid.SHORT);
+    }
+  };
+
   return (
     <ScrollView style={styles.Container}>
       <View style={{ padding: 10 }}>
@@ -124,7 +177,7 @@ const Payment = (props) => {
               Tôi đồng ý với điều khoản sử dụng và đang mua vé cho người có độ
               tuổi phù hợp.
             </Text>
-            <Pressable style={styles.button}>
+            <Pressable style={styles.button} onPress={handlePayment}>
               <Text style={{ color: "white" }}>Tôi đồng ý và tiếp tục</Text>
             </Pressable>
           </View>

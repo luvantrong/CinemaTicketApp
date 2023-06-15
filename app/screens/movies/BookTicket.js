@@ -145,6 +145,7 @@ const BookTicket = (props) => {
       idPopcorn: idPopcorn,
       date: text,
       selectedIndex: suatXem,
+      
     }); //
   };
 
