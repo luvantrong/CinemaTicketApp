@@ -13,6 +13,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AccountContext } from "../../context/AccountContext";
 
 const Payment = (props) => {
+  const {navigation} = props;
   const { soGhe, movie, soLuongPopcorn, idPopcorn, selectedIndex, date } =
     props?.route?.params;
   console.log(soGhe, movie, soLuongPopcorn, idPopcorn, selectedIndex, date);
@@ -63,7 +64,7 @@ const Payment = (props) => {
     const bapRang = dataPopcorn.name;
     const soLuong = soLuongPopcorn;
     const nguoiDung = dataAccount.email;
-    const image = dataPopcorn.image;
+    const image = movie.anhBia;
     console.log(
       tenPhim,
       giaVe,
@@ -100,6 +101,7 @@ const Payment = (props) => {
     console.log(res);
     if (res.result) {
       ToastAndroid.show("Mua vé thành công", ToastAndroid.SHORT);
+      navigation.navigate("HomeScreen");
     } else {
       const mes = res.message;
       ToastAndroid.show(mes, ToastAndroid.SHORT);
