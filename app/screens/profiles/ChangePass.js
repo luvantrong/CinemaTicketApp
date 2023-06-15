@@ -11,6 +11,7 @@ import {
 import React, { useState, useContext } from "react";
 import { AccountContext } from "../../context/AccountContext";
 import config from "../../config/config";
+import { Pressable } from "react-native";
 
 const ChangePass = (props) => {
   const { navigation } = props;
@@ -19,6 +20,11 @@ const ChangePass = (props) => {
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [oldPassword, setOldPassword] = useState("");
+
+  const handleBack = () => {
+    navigation.goBack();
+  }
+
   const handleChangePassword = async () => {
     let id = dataAccount._id;
     let data = { id, password };
@@ -63,7 +69,9 @@ const ChangePass = (props) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.headerTitle}>
-          <Image source={require("../../images/back.png")}></Image>
+          <Pressable onPress={handleBack}>
+            <Image source={require("../../images/back.png")}></Image>
+          </Pressable>
           <Text style={styles.textHeader}>Change Password</Text>
         </View>
       </View>

@@ -34,6 +34,10 @@ const Profiles = (props) => {
     navigation.navigate("EditProfile");
   };
 
+  const handleHistoryTicket = () => {
+    navigation.navigate("TicketHistory");
+  }
+
   const handleLogout = async () => {
     Alert.alert("Thông báo", "Bạn có chắc chắn muốn đăng xuất không?", [
       {
@@ -74,6 +78,23 @@ const Profiles = (props) => {
           <Text style={styles.textEdit}>Edit Profile</Text>
         </TouchableOpacity>
       </View>
+
+      <TouchableOpacity style={styles.content}>
+        <Pressable
+          style={styles.contentFunction}
+          onPress={handleHistoryTicket}
+        >
+          <Image
+            style={styles.contentFunctionImage}
+            source={require("../../images/ticket2.png")}
+          ></Image>
+          <Text style={styles.textFunction}>Ticket History</Text>
+        </Pressable>
+        <Image
+          style={styles.imgBack}
+          source={require("../../images/backarrow1.png")}
+        ></Image>
+      </TouchableOpacity>
 
       <TouchableOpacity style={styles.content}>
         <Pressable
